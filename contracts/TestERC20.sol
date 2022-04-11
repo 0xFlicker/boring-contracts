@@ -25,7 +25,9 @@ contract TestERC20 is ERC20, AccessControl {
     int32 _nonce,
     bytes calldata _sig
   ) public returns (bool) {
+    // Prevents replay attacks
     require(addressMintNonce[_to] == _nonce, "Invalid nonce");
+    // Check signature
     require(
       verifyOwnerSignature(
         keccak256(abi.encodePacked(_to, _amount, _nonce)),
@@ -34,7 +36,9 @@ contract TestERC20 is ERC20, AccessControl {
       "Invalid Signature"
     );
 
+    // Mint
     _mint(_to, _amount);
+    // Update nonce
     addressMintNonce[_to]++;
 
     return true;

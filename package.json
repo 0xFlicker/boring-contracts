@@ -20,6 +20,7 @@
     "deploy:maticmum": "hardhat deploy --network maticmum --export-all deployments/networks.json",
     "deploy:matic": "hardhat deploy --network matic --export-all deployments/networks.json",
     "deploy:goerli": "hardhat deploy --network goerli --export-all deployments/networks.json",
+    "deploy:rinkeby": "hardhat deploy --network rinkeby --export-all deployments/networks.json",
     "start:dev": "hardhat node --network hardhat  --export-all deployments/networks.json",
     "test": "hardhat test",
     "prepublish": "yarn compile && yarn build && cp contracts/* ."

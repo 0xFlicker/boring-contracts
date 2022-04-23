@@ -9,3 +9,4 @@ node_modules
 # from pre-publish
 /*.sol
 yarn-error.log
+.env

@@ -1,6 +1,6 @@
 {
   "name": "@souls-of-akaso/contracts",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "CmdrNFT <cmdrnft@protonmail.com>",
   "license": "MIT",
   "main": "dist/index.js",

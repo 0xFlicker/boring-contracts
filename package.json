@@ -1,9 +1,14 @@
 {
   "name": "@souls-of-akaso/contracts",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "author": "CmdrNFT <cmdrnft@protonmail.com>",
   "license": "MIT",
-  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "git://github.com/souls-of-akaso/contracts.git",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "build": "tsc --build",
     "compile": "hardhat compile",
@@ -16,7 +21,8 @@
     "deploy:matic": "hardhat deploy --network matic --export-all deployments/networks.json",
     "deploy:goerli": "hardhat deploy --network goerli --export-all deployments/networks.json",
     "start:dev": "hardhat node --network hardhat  --export-all deployments/networks.json",
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "prepublish": "yarn compile && yarn build && cp contracts/* ."
   },
   "dependencies": {
     "ethers": "^5.5.3"

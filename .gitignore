@@ -5,3 +5,7 @@ artifacts
 deployments
 typechain
 node_modules
+.npmrc
+# from pre-publish
+/*.sol
+yarn-error.log

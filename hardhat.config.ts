@@ -18,7 +18,7 @@ dotenv.config();
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.4",
+    version: "0.8.10",
     settings: {
       optimizer: {
         enabled: true,
@@ -28,8 +28,8 @@ const config: HardhatUserConfig = {
   },
   defaultNetwork: "hardhat",
   namedAccounts: {
-    owner: 0,
-    manager: 1,
+    deployer: 0,
+    owner: 1,
     user: 2,
   },
   networks: addForkConfiguration({

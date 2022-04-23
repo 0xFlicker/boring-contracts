@@ -1,8 +1,8 @@
 name: Create and publish the contracts
 
 on:
-  release:
-    types: [created]
+  push:
+    tags: ["v*"]
 jobs:
   build:
     runs-on: ubuntu-latest

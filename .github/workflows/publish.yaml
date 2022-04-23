@@ -2,7 +2,10 @@ name: Create and publish the contracts
 
 on:
   push:
-    tags: ["v*"]
+    branches:
+      - releases/**
+    tags:
+      - v*
 jobs:
   build:
     runs-on: ubuntu-latest

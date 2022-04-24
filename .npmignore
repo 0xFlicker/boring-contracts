@@ -1,8 +1,8 @@
-test
-utils
-typechain
-contracts
-cache
+/test
+/utils
+/typechain
+/contracts
+/cache
 .github
 .solhint.json
 .solhintignore

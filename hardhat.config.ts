@@ -29,8 +29,8 @@ const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   namedAccounts: {
     deployer: 0,
-    owner: 1,
-    signer: 2,
+    signer: 1,
+    staking: 2,
     user: 3,
   },
   networks: addForkConfiguration({
@@ -95,6 +95,7 @@ const config: HardhatUserConfig = {
       goerli: process.env.ETHERSCAN_API_KEY_GOERLI,
       polygonMumbai: process.env.ETHERSCAN_API_KEY_MATICMUM,
       polygon: process.env.ETHERSCAN_API_KEY_MATIC,
+      rinkeby: process.env.ETHERSCAN_API_KEY_RINKEBY,
     },
   },
   typechain: {

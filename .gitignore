@@ -3,7 +3,6 @@ dist
 cache
 artifacts
 deployments
-typechain
 node_modules
 .npmrc
 # from pre-publish

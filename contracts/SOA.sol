@@ -11,6 +11,7 @@ import "@divergencetech/ethier/contracts/utils/Monotonic.sol";
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "hardhat/console.sol";
 
 interface ITokenURIGenerator {
   function tokenURI(uint256 tokenId) external view returns (string memory);
@@ -30,8 +31,6 @@ contract SOA is
   using Monotonic for Monotonic.Increaser;
   using SignatureChecker for EnumerableSet.AddressSet;
 
-  IERC721 public immutable proof;
-
   /**
     @notice Role of administrative users allowed to expel a Moonbird from the
     nest.
@@ -42,20 +41,17 @@ contract SOA is
   constructor(
     string memory name,
     string memory symbol,
-    IERC721 _proof,
+    string memory baseURI,
+    uint256 price,
     address payable beneficiary,
     address payable royaltyReceiver
   )
     ERC721ACommon(name, symbol)
-    BaseTokenURI("")
+    BaseTokenURI(baseURI)
     FixedPriceSeller(
-      2.5 ether,
-      // Not including a separate pool for PROOF holders, taking the total
-      // to 10k. We don't enforce buyer limits here because it's already
-      // done by only issuing a single signature per address, and double
-      // enforcement would waste gas.
+      price,
       Seller.SellerConfig({
-        totalInventory: 8_000,
+        totalInventory: 10_000,
         lockTotalInventory: true,
         maxPerAddress: 0,
         maxPerTx: 0,
@@ -66,7 +62,6 @@ contract SOA is
       beneficiary
     )
   {
-    proof = _proof;
     _setDefaultRoyalty(royaltyReceiver, 500);
     _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
   }
@@ -80,12 +75,6 @@ contract SOA is
     bool
   ) internal override {
     _safeMint(to, n);
-
-    // We're using two separate pools (one from Seller, and one for PROOF
-    // minting), so add an extra layer of checks for this invariant. This
-    // should never fail as each pool has its own restriction, and is in
-    // place purely for tests (hence assert).
-    assert(totalSupply() <= 10_000);
   }
 
   /**
@@ -94,18 +83,16 @@ contract SOA is
   mapping(bytes32 => bool) public usedMessages;
 
   /**
-    @notice Mint as a non-holder of PROOF tokens.
-     */
-  function mintPublic(
+    @notice Mint token.
+    */
+  function mint(
     address to,
     bytes32 nonce,
     bytes calldata sig
   ) external payable {
-    signers.requireValidSignature(
-      signaturePayload(to, nonce),
-      sig,
-      usedMessages
-    );
+    bytes memory payload = signaturePayload(to, nonce);
+    console.logBytes(payload);
+    signers.requireValidSignature(payload, sig, usedMessages);
     _purchase(to, 1);
   }
 
@@ -138,73 +125,7 @@ contract SOA is
     return abi.encodePacked(to, nonce);
   }
 
-  /**
-    @notice Two guaranteed mints per PROOF holder.
-    @dev This is specifically tracked because unclaimed tokens will be minted to
-    the PROOF wallet, so the pool guarantees an upper bound.
-     */
-  uint256 public proofPoolRemaining = 2000;
-
   ERC721Redeemer.Claims private redeemedPROOF;
-
-  /**
-    @dev Used by both PROOF-holder and PROOF-admin minting from the pool.
-     */
-  modifier reducePROOFPool(uint256 n) {
-    require(n <= proofPoolRemaining, "SOA: PROOF pool exhausted");
-    proofPoolRemaining -= n;
-    _;
-  }
-
-  /**
-    @notice Flag indicating whether holders of PROOF passes can mint.
-     */
-  bool public proofMintingOpen = false;
-
-  /**
-    @notice Sets whether holders of PROOF passes can mint.
-     */
-  function setPROOFMintingOpen(bool open) external onlyOwner {
-    proofMintingOpen = open;
-  }
-
-  /**
-    @notice Mint as a holder of a PROOF token.
-    @dev Repeat a PROOF token ID twice to redeem both of its claims; recurring
-    values SHOULD be adjacent for improved gas (eg [1,1,2,2] not [1,2,1,2]).
-     */
-  function mintPROOF(uint256[] calldata proofTokenIds)
-    external
-    reducePROOFPool(proofTokenIds.length)
-  {
-    require(proofMintingOpen, "SOA: PROOF minting closed");
-    uint256 n = redeemedPROOF.redeem(2, msg.sender, proof, proofTokenIds);
-    _handlePurchase(msg.sender, n, true);
-  }
-
-  /**
-    @notice Returns how many additional SOA can be claimed with the PROOF
-    token.
-     */
-  function proofClaimsRemaining(uint256 tokenId)
-    external
-    view
-    returns (uint256)
-  {
-    require(tokenId < 1000, "Token doesn't exist");
-    return 2 - redeemedPROOF.claimed(tokenId);
-  }
-
-  /**
-    @notice Mint unclaimed tokens from the PROOF-holder pool.
-     */
-  function mintUnclaimed(address to, uint256 n)
-    external
-    onlyOwner
-    reducePROOFPool(n)
-  {
-    _handlePurchase(to, n, true);
-  }
 
   /**
     @dev tokenId to nesting start time (0 = not nesting).

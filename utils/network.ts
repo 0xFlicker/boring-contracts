@@ -5,9 +5,42 @@ import {
   NetworksUserConfig,
 } from "hardhat/types";
 
+export function nft_name(networkName: string): string {
+  if (networkName) {
+    const name = process.env[`NFT_NAME_${networkName.toUpperCase()}`];
+    if (name && name !== "") {
+      console.log("Using token name from env: ", name);
+      return name;
+    }
+  }
+  return "TEST";
+}
+
+export function nft_symbol(networkName: string): string {
+  if (networkName) {
+    const name = process.env[`NFT_SYMBOL_${networkName.toUpperCase()}`];
+    if (name && name !== "") {
+      console.log("Using short token name from env: ", name);
+      return name;
+    }
+  }
+  return "TST";
+}
+
+export function nft_mint_price(networkName: string): string {
+  if (networkName) {
+    const name = process.env[`MINT_PRICE_${networkName.toUpperCase()}`];
+    if (name && name !== "") {
+      console.log("Using token price from env: ", name);
+      return name;
+    }
+  }
+  return "0.01 ether";
+}
+
 export function metadata_url(networkName: string): string {
   if (networkName) {
-    const uri = `METADATA_URI_${networkName.toUpperCase()}`;
+    const uri = process.env[`METADATA_URI_${networkName.toUpperCase()}`];
     if (uri && uri !== "") {
       console.log("Using metadata uri from env: ", uri);
       return uri;

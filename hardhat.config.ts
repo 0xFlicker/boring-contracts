@@ -10,12 +10,37 @@ import "hardhat-gas-reporter";
 import "solidity-coverage";
 import { node_url, accounts, addForkConfiguration } from "./utils/network";
 import { utils } from "ethers";
+import { SOA__factory } from "./typechain";
 
 dotenv.config();
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
+task("mint", "mint a token with a signature")
+  .addParam("to", "The account to mint to", "0x0", types.string)
+  .addParam("nonce", "The mint nonce", 0, types.int)
+  .setAction(async ({ to, nonce }, hre) => {
+    const { deployments, getNamedAccounts, network, run, ethers } = hre;
+    const { signer: signerAddress } = await getNamedAccounts();
 
+    const deployment = await deployments.get("SOA");
+    const signer = await ethers.getSigner(signerAddress);
+    const nonceBytes = ethers.utils.hexZeroPad(ethers.utils.hexlify(nonce), 32);
+    console.log(`Signer address: ${signerAddress}`);
+    const message = ethers.utils.solidityPack(
+      ["address", "bytes32"],
+      [to, nonceBytes]
+    );
+    const signature = await signer.signMessage(
+      // Needs to be cast to binary data, otherwise will be signed as a string
+      utils.arrayify(
+        // This call is the same a utils.keccak256(utils.solidityPack(...))
+        message
+      )
+    );
+    const minter = await ethers.getSigner(to);
+    const contract = SOA__factory.connect(deployment.address, minter);
+
+    await contract.mint(to, nonceBytes, signature);
+  });
 const config: HardhatUserConfig = {
   solidity: {
     version: "0.8.9",
@@ -31,7 +56,8 @@ const config: HardhatUserConfig = {
     deployer: 0,
     signer: 1,
     staking: 2,
-    user: 3,
+    beneficiary: 3,
+    user: 4,
   },
   networks: addForkConfiguration({
     hardhat: {
@@ -50,8 +76,8 @@ const config: HardhatUserConfig = {
       tags: ["local"],
     },
     "hardhat-node": {
-      url: node_url("hardhat-node"),
-      accounts: accounts("hardhat-node"),
+      url: node_url("hardhat"),
+      accounts: accounts("hardhat"),
       tags: ["local"],
     },
     rinkeby: {

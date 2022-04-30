@@ -10,7 +10,7 @@ import "hardhat-gas-reporter";
 import "solidity-coverage";
 import { node_url, accounts, addForkConfiguration } from "./utils/network";
 import { utils } from "ethers";
-import { SOA__factory } from "./typechain";
+const promiseSOA__factory = import("./typechain");
 
 dotenv.config();
 
@@ -20,7 +20,7 @@ task("mint", "mint a token with a signature")
   .setAction(async ({ to, nonce }, hre) => {
     const { deployments, getNamedAccounts, network, run, ethers } = hre;
     const { signer: signerAddress } = await getNamedAccounts();
-
+    const { SOA__factory } = await promiseSOA__factory;
     const deployment = await deployments.get("SOA");
     const signer = await ethers.getSigner(signerAddress);
     const nonceBytes = ethers.utils.hexZeroPad(ethers.utils.hexlify(nonce), 32);

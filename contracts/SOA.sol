@@ -90,9 +90,11 @@ contract SOA is
     bytes32 nonce,
     bytes calldata sig
   ) external payable {
-    bytes memory payload = signaturePayload(to, nonce);
-    console.logBytes(payload);
-    signers.requireValidSignature(payload, sig, usedMessages);
+    signers.requireValidSignature(
+      signaturePayload(to, nonce),
+      sig,
+      usedMessages
+    );
     _purchase(to, 1);
   }
 

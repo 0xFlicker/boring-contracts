@@ -29,6 +29,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721APreApproval__factory>;
     getContractFactory(
+      name: "ERC721Enumerator",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC721Enumerator__factory>;
+    getContractFactory(
+      name: "IERC721NotQuiteEnumerable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC721NotQuiteEnumerable__factory>;
+    getContractFactory(
       name: "ERC721Redeemer",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721Redeemer__factory>;
@@ -125,6 +133,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
+      name: "Enumerator",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Enumerator__factory>;
+    getContractFactory(
       name: "ITokenURIGenerator",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ITokenURIGenerator__factory>;
@@ -169,6 +181,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC721APreApproval>;
+    getContractAt(
+      name: "ERC721Enumerator",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC721Enumerator>;
+    getContractAt(
+      name: "IERC721NotQuiteEnumerable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC721NotQuiteEnumerable>;
     getContractAt(
       name: "ERC721Redeemer",
       address: string,
@@ -289,6 +311,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
+    getContractAt(
+      name: "Enumerator",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Enumerator>;
     getContractAt(
       name: "ITokenURIGenerator",
       address: string,

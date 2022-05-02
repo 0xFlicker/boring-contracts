@@ -13,6 +13,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments;
 
   const { deployer, signer, beneficiary } = await getNamedAccounts();
+  console.log(`Deploying to ${network.name}`);
   const args = [
     nft_name(network.name),
     nft_symbol(network.name),
@@ -21,6 +22,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     beneficiary,
     beneficiary,
   ];
+
+  console.log(`Deploying SOA with arguments: ${JSON.stringify(args)}`);
+  await deploy("Enumerator", {
+    from: deployer,
+    args: [],
+    log: true,
+    skipIfAlreadyDeployed: false,
+  });
   const deployed = await deploy("SOA", {
     from: deployer,
     args,

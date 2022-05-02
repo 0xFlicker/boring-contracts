@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as soaSol from "./SOA.sol";
+export { Enumerator__factory } from "./Enumerator__factory";
 export { TestERC20__factory } from "./TestERC20__factory";
 export { TestERC721__factory } from "./TestERC721__factory";
 export { TestSignature__factory } from "./TestSignature__factory";

@@ -18,6 +18,10 @@ export type { ERC721ACommon } from "./@divergencetech/ethier/contracts/erc721/ER
 export { ERC721ACommon__factory } from "./factories/@divergencetech/ethier/contracts/erc721/ERC721ACommon__factory";
 export type { ERC721APreApproval } from "./@divergencetech/ethier/contracts/erc721/ERC721APreApproval";
 export { ERC721APreApproval__factory } from "./factories/@divergencetech/ethier/contracts/erc721/ERC721APreApproval__factory";
+export type { ERC721Enumerator } from "./@divergencetech/ethier/contracts/erc721/ERC721Enumerator.sol/ERC721Enumerator";
+export { ERC721Enumerator__factory } from "./factories/@divergencetech/ethier/contracts/erc721/ERC721Enumerator.sol/ERC721Enumerator__factory";
+export type { IERC721NotQuiteEnumerable } from "./@divergencetech/ethier/contracts/erc721/ERC721Enumerator.sol/IERC721NotQuiteEnumerable";
+export { IERC721NotQuiteEnumerable__factory } from "./factories/@divergencetech/ethier/contracts/erc721/ERC721Enumerator.sol/IERC721NotQuiteEnumerable__factory";
 export type { ERC721Redeemer } from "./@divergencetech/ethier/contracts/erc721/ERC721Redeemer";
 export { ERC721Redeemer__factory } from "./factories/@divergencetech/ethier/contracts/erc721/ERC721Redeemer__factory";
 export type { FixedPriceSeller } from "./@divergencetech/ethier/contracts/sales/FixedPriceSeller";
@@ -66,6 +70,8 @@ export type { ERC165 } from "./@openzeppelin/contracts/utils/introspection/ERC16
 export { ERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/ERC165__factory";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165";
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
+export type { Enumerator } from "./contracts/Enumerator";
+export { Enumerator__factory } from "./factories/contracts/Enumerator__factory";
 export type { ITokenURIGenerator } from "./contracts/SOA.sol/ITokenURIGenerator";
 export { ITokenURIGenerator__factory } from "./factories/contracts/SOA.sol/ITokenURIGenerator__factory";
 export type { SOA } from "./contracts/SOA.sol/SOA";

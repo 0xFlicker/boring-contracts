@@ -42,6 +42,8 @@ export type { IAccessControlEnumerable } from "./@openzeppelin/contracts/access/
 export { IAccessControlEnumerable__factory } from "./factories/@openzeppelin/contracts/access/IAccessControlEnumerable__factory";
 export type { Ownable } from "./@openzeppelin/contracts/access/Ownable";
 export { Ownable__factory } from "./factories/@openzeppelin/contracts/access/Ownable__factory";
+export type { PaymentSplitter } from "./@openzeppelin/contracts/finance/PaymentSplitter";
+export { PaymentSplitter__factory } from "./factories/@openzeppelin/contracts/finance/PaymentSplitter__factory";
 export type { IERC2981 } from "./@openzeppelin/contracts/interfaces/IERC2981";
 export { IERC2981__factory } from "./factories/@openzeppelin/contracts/interfaces/IERC2981__factory";
 export type { Pausable } from "./@openzeppelin/contracts/security/Pausable";
@@ -76,11 +78,11 @@ export type { ITokenURIGenerator } from "./contracts/SOA.sol/ITokenURIGenerator"
 export { ITokenURIGenerator__factory } from "./factories/contracts/SOA.sol/ITokenURIGenerator__factory";
 export type { SOA } from "./contracts/SOA.sol/SOA";
 export { SOA__factory } from "./factories/contracts/SOA.sol/SOA__factory";
-export type { TestERC20 } from "./contracts/TestERC20";
-export { TestERC20__factory } from "./factories/contracts/TestERC20__factory";
-export type { TestERC721 } from "./contracts/TestERC721";
-export { TestERC721__factory } from "./factories/contracts/TestERC721__factory";
-export type { TestSignature } from "./contracts/TestSignature";
-export { TestSignature__factory } from "./factories/contracts/TestSignature__factory";
+export type { SOUL } from "./contracts/SOUL.sol/SOUL";
+export { SOUL__factory } from "./factories/contracts/SOUL.sol/SOUL__factory";
+export type { StakingRewardsSource } from "./contracts/SOUL.sol/StakingRewardsSource";
+export { StakingRewardsSource__factory } from "./factories/contracts/SOUL.sol/StakingRewardsSource__factory";
+export type { StakingSimple } from "./contracts/StakingSimple";
+export { StakingSimple__factory } from "./factories/contracts/StakingSimple__factory";
 export type { ERC721A } from "./erc721a/contracts/ERC721A";
 export { ERC721A__factory } from "./factories/erc721a/contracts/ERC721A__factory";

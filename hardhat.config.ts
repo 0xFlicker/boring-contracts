@@ -10,6 +10,7 @@ import "hardhat-gas-reporter";
 import "solidity-coverage";
 import { node_url, accounts, addForkConfiguration } from "./utils/network";
 import { utils } from "ethers";
+import { Enumerator__factory } from "./typechain/factories/contracts";
 const promiseSOA__factory = import("./typechain");
 
 dotenv.config();
@@ -17,7 +18,13 @@ dotenv.config();
 task("mint", "mint a token with a signature")
   .addParam("to", "The account to mint to", "0x0", types.string)
   .addParam("nonce", "The mint nonce", 0, types.int)
-  .setAction(async ({ to, nonce }, hre) => {
+  .addOptionalParam(
+    "transfer",
+    "optionally, transfer to",
+    undefined,
+    types.string
+  )
+  .setAction(async ({ to, nonce, transfer }, hre) => {
     const { deployments, getNamedAccounts, network, run, ethers } = hre;
     const { signer: signerAddress } = await getNamedAccounts();
     const { SOA__factory } = await promiseSOA__factory;
@@ -38,8 +45,24 @@ task("mint", "mint a token with a signature")
     );
     const minter = await ethers.getSigner(to);
     const contract = SOA__factory.connect(deployment.address, minter);
-
-    await contract.mint(to, nonceBytes, signature);
+    const enumerator = Enumerator__factory.connect(
+      (await deployments.get("Enumerator")).address,
+      minter
+    );
+    console.log(`Minting to ${to} with nonce ${nonce}`);
+    await contract.presaleMint(to, nonceBytes, 1, signature);
+    if (transfer) {
+      console.log(`Transferring to ${transfer}`);
+      const token = await enumerator[
+        "tokenOfOwnerByIndex(address,address,uint256)"
+      ](contract.address, minter.address, 0);
+      console.log(`Tokens: ${token}`);
+      await contract["safeTransferFrom(address,address,uint256)"](
+        minter.address,
+        transfer,
+        token
+      );
+    }
   });
 const config: HardhatUserConfig = {
   solidity: {
@@ -112,6 +135,7 @@ const config: HardhatUserConfig = {
   }),
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
+    gasPrice: 30,
     currency: "USD",
   },
   etherscan: {

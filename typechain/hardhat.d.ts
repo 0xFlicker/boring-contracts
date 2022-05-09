@@ -77,6 +77,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Ownable__factory>;
     getContractFactory(
+      name: "PaymentSplitter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PaymentSplitter__factory>;
+    getContractFactory(
       name: "IERC2981",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC2981__factory>;
@@ -145,17 +149,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SOA__factory>;
     getContractFactory(
-      name: "TestERC20",
+      name: "SOUL",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.TestERC20__factory>;
+    ): Promise<Contracts.SOUL__factory>;
     getContractFactory(
-      name: "TestERC721",
+      name: "StakingRewardsSource",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.TestERC721__factory>;
+    ): Promise<Contracts.StakingRewardsSource__factory>;
     getContractFactory(
-      name: "TestSignature",
+      name: "StakingSimple",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.TestSignature__factory>;
+    ): Promise<Contracts.StakingSimple__factory>;
     getContractFactory(
       name: "ERC721A",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -242,6 +246,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Ownable>;
     getContractAt(
+      name: "PaymentSplitter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PaymentSplitter>;
+    getContractAt(
       name: "IERC2981",
       address: string,
       signer?: ethers.Signer
@@ -327,20 +336,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.SOA>;
     getContractAt(
-      name: "TestERC20",
+      name: "SOUL",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.TestERC20>;
+    ): Promise<Contracts.SOUL>;
     getContractAt(
-      name: "TestERC721",
+      name: "StakingRewardsSource",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.TestERC721>;
+    ): Promise<Contracts.StakingRewardsSource>;
     getContractAt(
-      name: "TestSignature",
+      name: "StakingSimple",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.TestSignature>;
+    ): Promise<Contracts.StakingSimple>;
     getContractAt(
       name: "ERC721A",
       address: string,

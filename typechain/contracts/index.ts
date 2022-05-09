@@ -3,7 +3,7 @@
 /* eslint-disable */
 import type * as soaSol from "./SOA.sol";
 export type { soaSol };
+import type * as soulSol from "./SOUL.sol";
+export type { soulSol };
 export type { Enumerator } from "./Enumerator";
-export type { TestERC20 } from "./TestERC20";
-export type { TestERC721 } from "./TestERC721";
-export type { TestSignature } from "./TestSignature";
+export type { StakingSimple } from "./StakingSimple";

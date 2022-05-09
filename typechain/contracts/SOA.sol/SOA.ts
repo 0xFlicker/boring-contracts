@@ -27,36 +27,6 @@ import type {
   OnEvent,
 } from "../../common";
 
-export declare namespace Seller {
-  export type SellerConfigStruct = {
-    totalInventory: BigNumberish;
-    maxPerAddress: BigNumberish;
-    maxPerTx: BigNumberish;
-    freeQuota: BigNumberish;
-    reserveFreeQuota: boolean;
-    lockFreeQuota: boolean;
-    lockTotalInventory: boolean;
-  };
-
-  export type SellerConfigStructOutput = [
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    boolean,
-    boolean,
-    boolean
-  ] & {
-    totalInventory: BigNumber;
-    maxPerAddress: BigNumber;
-    maxPerTx: BigNumber;
-    freeQuota: BigNumber;
-    reserveFreeQuota: boolean;
-    lockFreeQuota: boolean;
-    lockTotalInventory: boolean;
-  };
-}
-
 export interface SOAInterface extends utils.Interface {
   functions: {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
@@ -66,26 +36,33 @@ export interface SOAInterface extends utils.Interface {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "baseTokenURI()": FunctionFragment;
-    "beneficiary()": FunctionFragment;
-    "cost(uint256,uint256)": FunctionFragment;
-    "expelFromNest(uint256)": FunctionFragment;
+    "cost()": FunctionFragment;
+    "expelFromSeeking(uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "getRoleMember(bytes32,uint256)": FunctionFragment;
     "getRoleMemberCount(bytes32)": FunctionFragment;
+    "gift(uint256[],address[])": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "mint(address,bytes32,bytes)": FunctionFragment;
+    "maxMint()": FunctionFragment;
+    "maxSupply()": FunctionFragment;
+    "mint(address,uint8)": FunctionFragment;
     "name()": FunctionFragment;
-    "nestingOpen()": FunctionFragment;
-    "nestingPeriod(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
-    "price()": FunctionFragment;
-    "purchaseFreeOfCharge(address,uint256)": FunctionFragment;
+    "payee(uint256)": FunctionFragment;
+    "preSaleMaxMintPerAccount()": FunctionFragment;
+    "presaleActive()": FunctionFragment;
+    "presaleMint(address,bytes32,uint8,bytes)": FunctionFragment;
+    "publicSaleActive()": FunctionFragment;
+    "release(address)": FunctionFragment;
+    "release(address,address)": FunctionFragment;
+    "released(address,address)": FunctionFragment;
+    "released(address)": FunctionFragment;
     "removeSigner(address)": FunctionFragment;
     "renderingContract()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
@@ -94,26 +71,34 @@ export interface SOAInterface extends utils.Interface {
     "royaltyInfo(uint256,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
-    "safeTransferWhileNesting(address,address,uint256)": FunctionFragment;
-    "sellerConfig()": FunctionFragment;
+    "safeTransferWhileSeeking(address,address,uint256)": FunctionFragment;
+    "seekingOpen()": FunctionFragment;
+    "seekingPeriod(uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBaseTokenURI(string)": FunctionFragment;
-    "setBeneficiary(address)": FunctionFragment;
-    "setNestingOpen(bool)": FunctionFragment;
-    "setPrice(uint256)": FunctionFragment;
+    "setCost(uint256)": FunctionFragment;
+    "setMaxMint(uint256)": FunctionFragment;
+    "setMaxSupply(uint256)": FunctionFragment;
+    "setMintActive(bool)": FunctionFragment;
+    "setPreSaleMaxMintPerAccount(uint256)": FunctionFragment;
+    "setPresaleActive(bool)": FunctionFragment;
     "setRenderingContract(address)": FunctionFragment;
     "setRoyaltyInfo(address,uint96)": FunctionFragment;
-    "setSellerConfig((uint256,uint256,uint256,uint248,bool,bool,bool))": FunctionFragment;
+    "setSeekingOpen(bool)": FunctionFragment;
+    "shares(address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
-    "toggleNesting(uint256[])": FunctionFragment;
+    "toggleSeeking(uint256[])": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
-    "totalSold()": FunctionFragment;
+    "totalReleased(address)": FunctionFragment;
+    "totalReleased()": FunctionFragment;
+    "totalShares()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unpause()": FunctionFragment;
     "usedMessages(bytes32)": FunctionFragment;
+    "withdrawSplit()": FunctionFragment;
   };
 
   getFunction(
@@ -125,26 +110,33 @@ export interface SOAInterface extends utils.Interface {
       | "approve"
       | "balanceOf"
       | "baseTokenURI"
-      | "beneficiary"
       | "cost"
-      | "expelFromNest"
+      | "expelFromSeeking"
       | "getApproved"
       | "getRoleAdmin"
       | "getRoleMember"
       | "getRoleMemberCount"
+      | "gift"
       | "grantRole"
       | "hasRole"
       | "isApprovedForAll"
+      | "maxMint"
+      | "maxSupply"
       | "mint"
       | "name"
-      | "nestingOpen"
-      | "nestingPeriod"
       | "owner"
       | "ownerOf"
       | "pause"
       | "paused"
-      | "price"
-      | "purchaseFreeOfCharge"
+      | "payee"
+      | "preSaleMaxMintPerAccount"
+      | "presaleActive"
+      | "presaleMint"
+      | "publicSaleActive"
+      | "release(address)"
+      | "release(address,address)"
+      | "released(address,address)"
+      | "released(address)"
       | "removeSigner"
       | "renderingContract"
       | "renounceOwnership"
@@ -153,26 +145,34 @@ export interface SOAInterface extends utils.Interface {
       | "royaltyInfo"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
-      | "safeTransferWhileNesting"
-      | "sellerConfig"
+      | "safeTransferWhileSeeking"
+      | "seekingOpen"
+      | "seekingPeriod"
       | "setApprovalForAll"
       | "setBaseTokenURI"
-      | "setBeneficiary"
-      | "setNestingOpen"
-      | "setPrice"
+      | "setCost"
+      | "setMaxMint"
+      | "setMaxSupply"
+      | "setMintActive"
+      | "setPreSaleMaxMintPerAccount"
+      | "setPresaleActive"
       | "setRenderingContract"
       | "setRoyaltyInfo"
-      | "setSellerConfig"
+      | "setSeekingOpen"
+      | "shares"
       | "supportsInterface"
       | "symbol"
-      | "toggleNesting"
+      | "toggleSeeking"
       | "tokenURI"
-      | "totalSold"
+      | "totalReleased(address)"
+      | "totalReleased()"
+      | "totalShares"
       | "totalSupply"
       | "transferFrom"
       | "transferOwnership"
       | "unpause"
       | "usedMessages"
+      | "withdrawSplit"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -197,16 +197,9 @@ export interface SOAInterface extends utils.Interface {
     functionFragment: "baseTokenURI",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "cost", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "beneficiary",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "cost",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "expelFromNest",
+    functionFragment: "expelFromSeeking",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -226,6 +219,10 @@ export interface SOAInterface extends utils.Interface {
     values: [BytesLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "gift",
+    values: [BigNumberish[], string[]]
+  ): string;
+  encodeFunctionData(
     functionFragment: "grantRole",
     values: [BytesLike, string]
   ): string;
@@ -237,19 +234,13 @@ export interface SOAInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     values: [string, string]
   ): string;
+  encodeFunctionData(functionFragment: "maxMint", values?: undefined): string;
+  encodeFunctionData(functionFragment: "maxSupply", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "mint",
-    values: [string, BytesLike, BytesLike]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "nestingOpen",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nestingPeriod",
-    values: [BigNumberish]
-  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
@@ -257,10 +248,38 @@ export interface SOAInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "pause", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(functionFragment: "price", values?: undefined): string;
+  encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
   encodeFunctionData(
-    functionFragment: "purchaseFreeOfCharge",
-    values: [string, BigNumberish]
+    functionFragment: "preSaleMaxMintPerAccount",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "presaleActive",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "presaleMint",
+    values: [string, BytesLike, BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "publicSaleActive",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "release(address)",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "release(address,address)",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "released(address,address)",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "released(address)",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "removeSigner",
@@ -295,12 +314,16 @@ export interface SOAInterface extends utils.Interface {
     values: [string, string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "safeTransferWhileNesting",
+    functionFragment: "safeTransferWhileSeeking",
     values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "sellerConfig",
+    functionFragment: "seekingOpen",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "seekingPeriod",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
@@ -311,16 +334,28 @@ export interface SOAInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "setBeneficiary",
-    values: [string]
+    functionFragment: "setCost",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "setNestingOpen",
+    functionFragment: "setMaxMint",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMaxSupply",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMintActive",
     values: [boolean]
   ): string;
   encodeFunctionData(
-    functionFragment: "setPrice",
+    functionFragment: "setPreSaleMaxMintPerAccount",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setPresaleActive",
+    values: [boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "setRenderingContract",
@@ -331,23 +366,35 @@ export interface SOAInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "setSellerConfig",
-    values: [Seller.SellerConfigStruct]
+    functionFragment: "setSeekingOpen",
+    values: [boolean]
   ): string;
+  encodeFunctionData(functionFragment: "shares", values: [string]): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "toggleNesting",
+    functionFragment: "toggleSeeking",
     values: [BigNumberish[]]
   ): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "totalSold", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "totalReleased(address)",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalReleased()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalShares",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -364,6 +411,10 @@ export interface SOAInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "usedMessages",
     values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawSplit",
+    values?: undefined
   ): string;
 
   decodeFunctionResult(
@@ -385,13 +436,9 @@ export interface SOAInterface extends utils.Interface {
     functionFragment: "baseTokenURI",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "beneficiary",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "cost", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "expelFromNest",
+    functionFragment: "expelFromSeeking",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -410,29 +457,52 @@ export interface SOAInterface extends utils.Interface {
     functionFragment: "getRoleMemberCount",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "gift", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "maxMint", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "maxSupply", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nestingOpen",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "nestingPeriod",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "purchaseFreeOfCharge",
+    functionFragment: "preSaleMaxMintPerAccount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "presaleActive",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "presaleMint",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "publicSaleActive",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "release(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "release(address,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "released(address,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "released(address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -465,11 +535,15 @@ export interface SOAInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "safeTransferWhileNesting",
+    functionFragment: "safeTransferWhileSeeking",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "sellerConfig",
+    functionFragment: "seekingOpen",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "seekingPeriod",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -480,15 +554,24 @@ export interface SOAInterface extends utils.Interface {
     functionFragment: "setBaseTokenURI",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "setCost", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setMaxMint", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "setBeneficiary",
+    functionFragment: "setMaxSupply",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setNestingOpen",
+    functionFragment: "setMintActive",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "setPrice", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setPreSaleMaxMintPerAccount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setPresaleActive",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "setRenderingContract",
     data: BytesLike
@@ -498,20 +581,32 @@ export interface SOAInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setSellerConfig",
+    functionFragment: "setSeekingOpen",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "toggleNesting",
+    functionFragment: "toggleSeeking",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "totalSold", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "totalReleased(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalReleased()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalShares",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -529,38 +624,46 @@ export interface SOAInterface extends utils.Interface {
     functionFragment: "usedMessages",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawSplit",
+    data: BytesLike
+  ): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
+    "ERC20PaymentReleased(address,address,uint256)": EventFragment;
     "Expelled(uint256)": EventFragment;
-    "Nested(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
-    "Refund(address,uint256)": EventFragment;
-    "Revenue(address,uint256,uint256)": EventFragment;
+    "PayeeAdded(address,uint256)": EventFragment;
+    "PaymentReceived(address,uint256)": EventFragment;
+    "PaymentReleased(address,uint256)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
     "RoleRevoked(bytes32,address,address)": EventFragment;
+    "Seeking(uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
-    "Unnested(uint256)": EventFragment;
     "Unpaused(address)": EventFragment;
+    "Unseeking(uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ERC20PaymentReleased"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Expelled"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Nested"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Refund"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Revenue"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PayeeAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PaymentReceived"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PaymentReleased"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Seeking"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Unnested"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Unseeking"): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -587,19 +690,25 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
+export interface ERC20PaymentReleasedEventObject {
+  token: string;
+  to: string;
+  amount: BigNumber;
+}
+export type ERC20PaymentReleasedEvent = TypedEvent<
+  [string, string, BigNumber],
+  ERC20PaymentReleasedEventObject
+>;
+
+export type ERC20PaymentReleasedEventFilter =
+  TypedEventFilter<ERC20PaymentReleasedEvent>;
+
 export interface ExpelledEventObject {
   tokenId: BigNumber;
 }
 export type ExpelledEvent = TypedEvent<[BigNumber], ExpelledEventObject>;
 
 export type ExpelledEventFilter = TypedEventFilter<ExpelledEvent>;
-
-export interface NestedEventObject {
-  tokenId: BigNumber;
-}
-export type NestedEvent = TypedEvent<[BigNumber], NestedEventObject>;
-
-export type NestedEventFilter = TypedEventFilter<NestedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -620,25 +729,38 @@ export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
-export interface RefundEventObject {
-  buyer: string;
-  amount: BigNumber;
+export interface PayeeAddedEventObject {
+  account: string;
+  shares: BigNumber;
 }
-export type RefundEvent = TypedEvent<[string, BigNumber], RefundEventObject>;
-
-export type RefundEventFilter = TypedEventFilter<RefundEvent>;
-
-export interface RevenueEventObject {
-  beneficiary: string;
-  numPurchased: BigNumber;
-  amount: BigNumber;
-}
-export type RevenueEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  RevenueEventObject
+export type PayeeAddedEvent = TypedEvent<
+  [string, BigNumber],
+  PayeeAddedEventObject
 >;
 
-export type RevenueEventFilter = TypedEventFilter<RevenueEvent>;
+export type PayeeAddedEventFilter = TypedEventFilter<PayeeAddedEvent>;
+
+export interface PaymentReceivedEventObject {
+  from: string;
+  amount: BigNumber;
+}
+export type PaymentReceivedEvent = TypedEvent<
+  [string, BigNumber],
+  PaymentReceivedEventObject
+>;
+
+export type PaymentReceivedEventFilter = TypedEventFilter<PaymentReceivedEvent>;
+
+export interface PaymentReleasedEventObject {
+  to: string;
+  amount: BigNumber;
+}
+export type PaymentReleasedEvent = TypedEvent<
+  [string, BigNumber],
+  PaymentReleasedEventObject
+>;
+
+export type PaymentReleasedEventFilter = TypedEventFilter<PaymentReleasedEvent>;
 
 export interface RoleAdminChangedEventObject {
   role: string;
@@ -677,6 +799,13 @@ export type RoleRevokedEvent = TypedEvent<
 
 export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
+export interface SeekingEventObject {
+  tokenId: BigNumber;
+}
+export type SeekingEvent = TypedEvent<[BigNumber], SeekingEventObject>;
+
+export type SeekingEventFilter = TypedEventFilter<SeekingEvent>;
+
 export interface TransferEventObject {
   from: string;
   to: string;
@@ -689,19 +818,19 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface UnnestedEventObject {
-  tokenId: BigNumber;
-}
-export type UnnestedEvent = TypedEvent<[BigNumber], UnnestedEventObject>;
-
-export type UnnestedEventFilter = TypedEventFilter<UnnestedEvent>;
-
 export interface UnpausedEventObject {
   account: string;
 }
 export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
+
+export interface UnseekingEventObject {
+  tokenId: BigNumber;
+}
+export type UnseekingEvent = TypedEvent<[BigNumber], UnseekingEventObject>;
+
+export type UnseekingEventFilter = TypedEventFilter<UnseekingEvent>;
 
 export interface SOA extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -755,15 +884,9 @@ export interface SOA extends BaseContract {
 
     baseTokenURI(overrides?: CallOverrides): Promise<[string]>;
 
-    beneficiary(overrides?: CallOverrides): Promise<[string]>;
+    cost(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    cost(
-      n: BigNumberish,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    expelFromNest(
+    expelFromSeeking(
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -786,6 +909,12 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    gift(
+      _mintAmount: BigNumberish[],
+      recipient: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     grantRole(
       role: BytesLike,
       account: string,
@@ -804,27 +933,17 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    maxMint(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    maxSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     mint(
       to: string,
-      nonce: BytesLike,
-      sig: BytesLike,
+      mintAmount: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
-
-    nestingOpen(overrides?: CallOverrides): Promise<[boolean]>;
-
-    nestingPeriod(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, BigNumber] & {
-        nesting: boolean;
-        current: BigNumber;
-        total: BigNumber;
-      }
-    >;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -839,13 +958,43 @@ export interface SOA extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    price(overrides?: CallOverrides): Promise<[BigNumber]>;
+    payee(index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
-    purchaseFreeOfCharge(
+    preSaleMaxMintPerAccount(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    presaleActive(overrides?: CallOverrides): Promise<[boolean]>;
+
+    presaleMint(
       to: string,
-      n: BigNumberish,
+      nonce: BytesLike,
+      mintAmount: BigNumberish,
+      sig: BytesLike,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    publicSaleActive(overrides?: CallOverrides): Promise<[boolean]>;
+
+    "release(address)"(
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    "release(address,address)"(
+      token: string,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "released(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "released(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     removeSigner(
       signer: string,
@@ -891,32 +1040,23 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    safeTransferWhileNesting(
+    safeTransferWhileSeeking(
       from: string,
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    sellerConfig(
+    seekingOpen(overrides?: CallOverrides): Promise<[boolean]>;
+
+    seekingPeriod(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean,
-        boolean,
-        boolean
-      ] & {
-        totalInventory: BigNumber;
-        maxPerAddress: BigNumber;
-        maxPerTx: BigNumber;
-        freeQuota: BigNumber;
-        reserveFreeQuota: boolean;
-        lockFreeQuota: boolean;
-        lockTotalInventory: boolean;
+      [boolean, BigNumber, BigNumber] & {
+        seeking: boolean;
+        current: BigNumber;
+        total: BigNumber;
       }
     >;
 
@@ -931,18 +1071,33 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setBeneficiary(
-      _beneficiary: string,
+    setCost(
+      _newCost: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setNestingOpen(
-      open: boolean,
+    setMaxMint(
+      _newmaxMint: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setPrice(
-      _price: BigNumberish,
+    setMaxSupply(
+      _newMaxSupply: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setMintActive(
+      _newMintActive: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setPreSaleMaxMintPerAccount(
+      _newPreSaleMaxMintPerAccount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setPresaleActive(
+      _newPresaleActive: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -957,10 +1112,12 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setSellerConfig(
-      config: Seller.SellerConfigStruct,
+    setSeekingOpen(
+      open: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    shares(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -969,7 +1126,7 @@ export interface SOA extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    toggleNesting(
+    toggleSeeking(
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -979,7 +1136,14 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    totalSold(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "totalReleased(address)"(
+      token: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "totalReleased()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -1003,6 +1167,10 @@ export interface SOA extends BaseContract {
       arg0: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    withdrawSplit(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -1030,15 +1198,9 @@ export interface SOA extends BaseContract {
 
   baseTokenURI(overrides?: CallOverrides): Promise<string>;
 
-  beneficiary(overrides?: CallOverrides): Promise<string>;
+  cost(overrides?: CallOverrides): Promise<BigNumber>;
 
-  cost(
-    n: BigNumberish,
-    arg1: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  expelFromNest(
+  expelFromSeeking(
     tokenId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -1061,6 +1223,12 @@ export interface SOA extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  gift(
+    _mintAmount: BigNumberish[],
+    recipient: string[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   grantRole(
     role: BytesLike,
     account: string,
@@ -1079,27 +1247,17 @@ export interface SOA extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  maxMint(overrides?: CallOverrides): Promise<BigNumber>;
+
+  maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
   mint(
     to: string,
-    nonce: BytesLike,
-    sig: BytesLike,
+    mintAmount: BigNumberish,
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
-
-  nestingOpen(overrides?: CallOverrides): Promise<boolean>;
-
-  nestingPeriod(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [boolean, BigNumber, BigNumber] & {
-      nesting: boolean;
-      current: BigNumber;
-      total: BigNumber;
-    }
-  >;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -1111,13 +1269,43 @@ export interface SOA extends BaseContract {
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
-  price(overrides?: CallOverrides): Promise<BigNumber>;
+  payee(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  purchaseFreeOfCharge(
+  preSaleMaxMintPerAccount(overrides?: CallOverrides): Promise<BigNumber>;
+
+  presaleActive(overrides?: CallOverrides): Promise<boolean>;
+
+  presaleMint(
     to: string,
-    n: BigNumberish,
+    nonce: BytesLike,
+    mintAmount: BigNumberish,
+    sig: BytesLike,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  publicSaleActive(overrides?: CallOverrides): Promise<boolean>;
+
+  "release(address)"(
+    account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  "release(address,address)"(
+    token: string,
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "released(address,address)"(
+    token: string,
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "released(address)"(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   removeSigner(
     signer: string,
@@ -1163,24 +1351,23 @@ export interface SOA extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  safeTransferWhileNesting(
+  safeTransferWhileSeeking(
     from: string,
     to: string,
     tokenId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  sellerConfig(
+  seekingOpen(overrides?: CallOverrides): Promise<boolean>;
+
+  seekingPeriod(
+    tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber, boolean, boolean, boolean] & {
-      totalInventory: BigNumber;
-      maxPerAddress: BigNumber;
-      maxPerTx: BigNumber;
-      freeQuota: BigNumber;
-      reserveFreeQuota: boolean;
-      lockFreeQuota: boolean;
-      lockTotalInventory: boolean;
+    [boolean, BigNumber, BigNumber] & {
+      seeking: boolean;
+      current: BigNumber;
+      total: BigNumber;
     }
   >;
 
@@ -1195,18 +1382,33 @@ export interface SOA extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setBeneficiary(
-    _beneficiary: string,
+  setCost(
+    _newCost: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setNestingOpen(
-    open: boolean,
+  setMaxMint(
+    _newmaxMint: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setPrice(
-    _price: BigNumberish,
+  setMaxSupply(
+    _newMaxSupply: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setMintActive(
+    _newMintActive: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setPreSaleMaxMintPerAccount(
+    _newPreSaleMaxMintPerAccount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setPresaleActive(
+    _newPresaleActive: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -1221,10 +1423,12 @@ export interface SOA extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setSellerConfig(
-    config: Seller.SellerConfigStruct,
+  setSeekingOpen(
+    open: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  shares(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   supportsInterface(
     interfaceId: BytesLike,
@@ -1233,14 +1437,21 @@ export interface SOA extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  toggleNesting(
+  toggleSeeking(
     tokenIds: BigNumberish[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  totalSold(overrides?: CallOverrides): Promise<BigNumber>;
+  "totalReleased(address)"(
+    token: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "totalReleased()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1261,6 +1472,10 @@ export interface SOA extends BaseContract {
   ): Promise<ContractTransaction>;
 
   usedMessages(arg0: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
+  withdrawSplit(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   callStatic: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -1285,15 +1500,9 @@ export interface SOA extends BaseContract {
 
     baseTokenURI(overrides?: CallOverrides): Promise<string>;
 
-    beneficiary(overrides?: CallOverrides): Promise<string>;
+    cost(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cost(
-      n: BigNumberish,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    expelFromNest(
+    expelFromSeeking(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1316,6 +1525,12 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    gift(
+      _mintAmount: BigNumberish[],
+      recipient: string[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     grantRole(
       role: BytesLike,
       account: string,
@@ -1334,27 +1549,17 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    maxMint(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
     mint(
       to: string,
-      nonce: BytesLike,
-      sig: BytesLike,
+      mintAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
-
-    nestingOpen(overrides?: CallOverrides): Promise<boolean>;
-
-    nestingPeriod(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, BigNumber] & {
-        nesting: boolean;
-        current: BigNumber;
-        total: BigNumber;
-      }
-    >;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -1364,13 +1569,43 @@ export interface SOA extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    price(overrides?: CallOverrides): Promise<BigNumber>;
+    payee(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    purchaseFreeOfCharge(
+    preSaleMaxMintPerAccount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    presaleActive(overrides?: CallOverrides): Promise<boolean>;
+
+    presaleMint(
       to: string,
-      n: BigNumberish,
+      nonce: BytesLike,
+      mintAmount: BigNumberish,
+      sig: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    publicSaleActive(overrides?: CallOverrides): Promise<boolean>;
+
+    "release(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "release(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "released(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "released(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     removeSigner(signer: string, overrides?: CallOverrides): Promise<void>;
 
@@ -1411,32 +1646,23 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    safeTransferWhileNesting(
+    safeTransferWhileSeeking(
       from: string,
       to: string,
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    sellerConfig(
+    seekingOpen(overrides?: CallOverrides): Promise<boolean>;
+
+    seekingPeriod(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean,
-        boolean,
-        boolean
-      ] & {
-        totalInventory: BigNumber;
-        maxPerAddress: BigNumber;
-        maxPerTx: BigNumber;
-        freeQuota: BigNumber;
-        reserveFreeQuota: boolean;
-        lockFreeQuota: boolean;
-        lockTotalInventory: boolean;
+      [boolean, BigNumber, BigNumber] & {
+        seeking: boolean;
+        current: BigNumber;
+        total: BigNumber;
       }
     >;
 
@@ -1451,14 +1677,32 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setBeneficiary(
-      _beneficiary: string,
+    setCost(_newCost: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    setMaxMint(
+      _newmaxMint: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setNestingOpen(open: boolean, overrides?: CallOverrides): Promise<void>;
+    setMaxSupply(
+      _newMaxSupply: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    setPrice(_price: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMintActive(
+      _newMintActive: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setPreSaleMaxMintPerAccount(
+      _newPreSaleMaxMintPerAccount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setPresaleActive(
+      _newPresaleActive: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setRenderingContract(
       _contract: string,
@@ -1471,10 +1715,9 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setSellerConfig(
-      config: Seller.SellerConfigStruct,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setSeekingOpen(open: boolean, overrides?: CallOverrides): Promise<void>;
+
+    shares(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -1483,14 +1726,21 @@ export interface SOA extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    toggleNesting(
+    toggleSeeking(
       tokenIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    totalSold(overrides?: CallOverrides): Promise<BigNumber>;
+    "totalReleased(address)"(
+      token: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "totalReleased()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1509,6 +1759,8 @@ export interface SOA extends BaseContract {
     unpause(overrides?: CallOverrides): Promise<void>;
 
     usedMessages(arg0: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
+    withdrawSplit(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -1534,11 +1786,19 @@ export interface SOA extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
+    "ERC20PaymentReleased(address,address,uint256)"(
+      token?: string | null,
+      to?: null,
+      amount?: null
+    ): ERC20PaymentReleasedEventFilter;
+    ERC20PaymentReleased(
+      token?: string | null,
+      to?: null,
+      amount?: null
+    ): ERC20PaymentReleasedEventFilter;
+
     "Expelled(uint256)"(tokenId?: BigNumberish | null): ExpelledEventFilter;
     Expelled(tokenId?: BigNumberish | null): ExpelledEventFilter;
-
-    "Nested(uint256)"(tokenId?: BigNumberish | null): NestedEventFilter;
-    Nested(tokenId?: BigNumberish | null): NestedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
@@ -1552,22 +1812,23 @@ export interface SOA extends BaseContract {
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    "Refund(address,uint256)"(
-      buyer?: string | null,
-      amount?: null
-    ): RefundEventFilter;
-    Refund(buyer?: string | null, amount?: null): RefundEventFilter;
+    "PayeeAdded(address,uint256)"(
+      account?: null,
+      shares?: null
+    ): PayeeAddedEventFilter;
+    PayeeAdded(account?: null, shares?: null): PayeeAddedEventFilter;
 
-    "Revenue(address,uint256,uint256)"(
-      beneficiary?: string | null,
-      numPurchased?: null,
+    "PaymentReceived(address,uint256)"(
+      from?: null,
       amount?: null
-    ): RevenueEventFilter;
-    Revenue(
-      beneficiary?: string | null,
-      numPurchased?: null,
+    ): PaymentReceivedEventFilter;
+    PaymentReceived(from?: null, amount?: null): PaymentReceivedEventFilter;
+
+    "PaymentReleased(address,uint256)"(
+      to?: null,
       amount?: null
-    ): RevenueEventFilter;
+    ): PaymentReleasedEventFilter;
+    PaymentReleased(to?: null, amount?: null): PaymentReleasedEventFilter;
 
     "RoleAdminChanged(bytes32,bytes32,bytes32)"(
       role?: BytesLike | null,
@@ -1602,6 +1863,9 @@ export interface SOA extends BaseContract {
       sender?: string | null
     ): RoleRevokedEventFilter;
 
+    "Seeking(uint256)"(tokenId?: BigNumberish | null): SeekingEventFilter;
+    Seeking(tokenId?: BigNumberish | null): SeekingEventFilter;
+
     "Transfer(address,address,uint256)"(
       from?: string | null,
       to?: string | null,
@@ -1613,11 +1877,11 @@ export interface SOA extends BaseContract {
       tokenId?: BigNumberish | null
     ): TransferEventFilter;
 
-    "Unnested(uint256)"(tokenId?: BigNumberish | null): UnnestedEventFilter;
-    Unnested(tokenId?: BigNumberish | null): UnnestedEventFilter;
-
     "Unpaused(address)"(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
+
+    "Unseeking(uint256)"(tokenId?: BigNumberish | null): UnseekingEventFilter;
+    Unseeking(tokenId?: BigNumberish | null): UnseekingEventFilter;
   };
 
   estimateGas: {
@@ -1646,15 +1910,9 @@ export interface SOA extends BaseContract {
 
     baseTokenURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    beneficiary(overrides?: CallOverrides): Promise<BigNumber>;
+    cost(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cost(
-      n: BigNumberish,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    expelFromNest(
+    expelFromSeeking(
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1680,6 +1938,12 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    gift(
+      _mintAmount: BigNumberish[],
+      recipient: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     grantRole(
       role: BytesLike,
       account: string,
@@ -1698,21 +1962,17 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    maxMint(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
     mint(
       to: string,
-      nonce: BytesLike,
-      sig: BytesLike,
+      mintAmount: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
-
-    nestingOpen(overrides?: CallOverrides): Promise<BigNumber>;
-
-    nestingPeriod(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1727,12 +1987,42 @@ export interface SOA extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    price(overrides?: CallOverrides): Promise<BigNumber>;
+    payee(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    purchaseFreeOfCharge(
+    preSaleMaxMintPerAccount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    presaleActive(overrides?: CallOverrides): Promise<BigNumber>;
+
+    presaleMint(
       to: string,
-      n: BigNumberish,
+      nonce: BytesLike,
+      mintAmount: BigNumberish,
+      sig: BytesLike,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    publicSaleActive(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "release(address)"(
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "release(address,address)"(
+      token: string,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "released(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "released(address)"(
+      account: string,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     removeSigner(
@@ -1779,14 +2069,19 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    safeTransferWhileNesting(
+    safeTransferWhileSeeking(
       from: string,
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    sellerConfig(overrides?: CallOverrides): Promise<BigNumber>;
+    seekingOpen(overrides?: CallOverrides): Promise<BigNumber>;
+
+    seekingPeriod(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
@@ -1799,18 +2094,33 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setBeneficiary(
-      _beneficiary: string,
+    setCost(
+      _newCost: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setNestingOpen(
-      open: boolean,
+    setMaxMint(
+      _newmaxMint: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setPrice(
-      _price: BigNumberish,
+    setMaxSupply(
+      _newMaxSupply: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setMintActive(
+      _newMintActive: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setPreSaleMaxMintPerAccount(
+      _newPreSaleMaxMintPerAccount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setPresaleActive(
+      _newPresaleActive: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1825,10 +2135,12 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setSellerConfig(
-      config: Seller.SellerConfigStruct,
+    setSeekingOpen(
+      open: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    shares(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -1837,7 +2149,7 @@ export interface SOA extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    toggleNesting(
+    toggleSeeking(
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1847,7 +2159,14 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    totalSold(overrides?: CallOverrides): Promise<BigNumber>;
+    "totalReleased(address)"(
+      token: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "totalReleased()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1870,6 +2189,10 @@ export interface SOA extends BaseContract {
     usedMessages(
       arg0: BytesLike,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    withdrawSplit(
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
@@ -1904,15 +2227,9 @@ export interface SOA extends BaseContract {
 
     baseTokenURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    beneficiary(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cost(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cost(
-      n: BigNumberish,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    expelFromNest(
+    expelFromSeeking(
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1938,6 +2255,12 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    gift(
+      _mintAmount: BigNumberish[],
+      recipient: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     grantRole(
       role: BytesLike,
       account: string,
@@ -1956,21 +2279,17 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    maxMint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     mint(
       to: string,
-      nonce: BytesLike,
-      sig: BytesLike,
+      mintAmount: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    nestingOpen(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    nestingPeriod(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1985,12 +2304,47 @@ export interface SOA extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    payee(
+      index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    purchaseFreeOfCharge(
+    preSaleMaxMintPerAccount(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    presaleActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    presaleMint(
       to: string,
-      n: BigNumberish,
+      nonce: BytesLike,
+      mintAmount: BigNumberish,
+      sig: BytesLike,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    publicSaleActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "release(address)"(
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "release(address,address)"(
+      token: string,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "released(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "released(address)"(
+      account: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     removeSigner(
@@ -2037,14 +2391,19 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    safeTransferWhileNesting(
+    safeTransferWhileSeeking(
       from: string,
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    sellerConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    seekingOpen(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    seekingPeriod(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
@@ -2057,18 +2416,33 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setBeneficiary(
-      _beneficiary: string,
+    setCost(
+      _newCost: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setNestingOpen(
-      open: boolean,
+    setMaxMint(
+      _newmaxMint: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setPrice(
-      _price: BigNumberish,
+    setMaxSupply(
+      _newMaxSupply: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setMintActive(
+      _newMintActive: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setPreSaleMaxMintPerAccount(
+      _newPreSaleMaxMintPerAccount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setPresaleActive(
+      _newPresaleActive: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2083,9 +2457,14 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setSellerConfig(
-      config: Seller.SellerConfigStruct,
+    setSeekingOpen(
+      open: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    shares(
+      account: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
@@ -2095,7 +2474,7 @@ export interface SOA extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    toggleNesting(
+    toggleSeeking(
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -2105,7 +2484,14 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    totalSold(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "totalReleased(address)"(
+      token: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "totalReleased()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -2128,6 +2514,10 @@ export interface SOA extends BaseContract {
     usedMessages(
       arg0: BytesLike,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    withdrawSplit(
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

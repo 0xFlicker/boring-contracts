@@ -8,7 +8,7 @@ import {
 } from "../typechain";
 import { BigNumber, utils } from "ethers";
 
-describe("Staking test", function () {
+describe("Minting test", function () {
   let accounts: SignerWithAddress[];
   this.beforeAll(async () => {
     accounts = await ethers.getSigners();

@@ -362,12 +362,7 @@ describe("Minting test", function () {
       beneficiary.address
     );
 
-    // Call mint function with the same values as the signature and the signature
-    const transaction = await mintContract.mint(user.address, 4, {
-      value: utils.parseEther("4"),
-    });
-
-    const receipt = await transaction.wait();
-    expect(receipt.gasUsed).to.be.lt(160_000);
+    await mintContract.gift([1], [user.address]);
+    expect(await mintContract.balanceOf(user.address)).to.eq(1);
   });
 });

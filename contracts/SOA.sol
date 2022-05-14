@@ -189,8 +189,6 @@ contract SOA is
     return abi.encodePacked(to, nonce);
   }
 
-  ERC721Redeemer.Claims private redeemedPROOF;
-
   /**
     @dev tokenId to seeking start time (0 = not seeking).
      */

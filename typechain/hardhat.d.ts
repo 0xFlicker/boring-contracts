@@ -129,6 +129,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Enumerator__factory>;
     getContractFactory(
+      name: "IWeights",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWeights__factory>;
+    getContractFactory(
+      name: "SignedWeights",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.SignedWeights__factory>;
+    getContractFactory(
       name: "ITokenURIGenerator",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ITokenURIGenerator__factory>;
@@ -298,6 +306,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Enumerator>;
+    getContractAt(
+      name: "IWeights",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWeights>;
+    getContractAt(
+      name: "SignedWeights",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SignedWeights>;
     getContractAt(
       name: "ITokenURIGenerator",
       address: string,

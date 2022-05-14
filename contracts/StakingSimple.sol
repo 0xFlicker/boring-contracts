@@ -5,6 +5,8 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "./IWeights.sol";
+import "hardhat/console.sol";
 
 pragma solidity ^0.8.9;
 
@@ -17,6 +19,7 @@ contract StakingSimple is Ownable, ReentrancyGuard {
   uint256 public acceleratedYield;
 
   address public signerAddress;
+  address public weightsAddress;
   bool public stakingLaunched;
   bool public depositPaused;
 
@@ -29,8 +32,8 @@ contract StakingSimple is Ownable, ReentrancyGuard {
 
   uint256 public baseRate;
   mapping(address => Staker) private _stakers;
-  mapping(address => mapping(uint256 => address)) private _ownerOfToken;
-  mapping(uint256 => uint256) private _tokensMultiplier;
+  mapping(uint16 => address) private _ownerOfToken;
+  mapping(uint16 => uint256) private _tokensMultiplier;
 
   event Deposit(
     address indexed staker,
@@ -55,36 +58,10 @@ contract StakingSimple is Ownable, ReentrancyGuard {
   }
 
   //deposit tokens function
-  function deposit(
-    bytes[] memory signature,
-    address contractAddress,
-    uint256[] memory tokenIds,
-    uint256[] memory rarityWeight
-  ) public nonReentrant {
+  function deposit(uint16[] memory tokenIds) public nonReentrant {
     require(!depositPaused, "Deposit paused");
     require(stakingLaunched, "Staking is not launched yet");
-    require(
-      tokenIds.length == rarityWeight.length,
-      "non-matching array lengths provided"
-    );
-    require(
-      contractAddress != address(0) && contractAddress == address(baseNFT),
-      "Unknown contract"
-    );
-
-    //check signature and setup rarity on each token
-    if (rarityWeight.length > 0) {
-      require(
-        _validateSignatureMultiSig(
-          signature,
-          contractAddress,
-          tokenIds,
-          rarityWeight
-        ),
-        "Invalid signature"
-      );
-      _setTokensValues(tokenIds, rarityWeight);
-    }
+    address contractAddress = address(baseNFT);
 
     Staker storage user = _stakers[_msgSender()];
     uint256 newYield = user.currentYield;
@@ -102,7 +79,7 @@ contract StakingSimple is Ownable, ReentrancyGuard {
         tokenIds[i]
       );
 
-      _ownerOfToken[contractAddress][tokenIds[i]] = _msgSender();
+      _ownerOfToken[tokenIds[i]] = _msgSender();
 
       newYield += getTokenYield(tokenIds[i]);
 
@@ -116,17 +93,10 @@ contract StakingSimple is Ownable, ReentrancyGuard {
   }
 
   //withdraw tokens function
-  function withdraw(address contractAddress, uint256[] memory tokenIds)
-    public
-    nonReentrant
-  {
-    require(
-      contractAddress != address(0) && contractAddress == address(baseNFT),
-      "Unknown contract"
-    );
-
+  function withdraw(uint16[] memory tokenIds) public nonReentrant {
     Staker storage user = _stakers[_msgSender()];
     uint256 newYield = user.currentYield;
+    address contractAddress = address(baseNFT);
 
     for (uint256 i; i < tokenIds.length; i++) {
       require(
@@ -134,7 +104,7 @@ contract StakingSimple is Ownable, ReentrancyGuard {
         "Not the owner"
       );
 
-      _ownerOfToken[contractAddress][tokenIds[i]] = address(0);
+      _ownerOfToken[tokenIds[i]] = address(0);
 
       if (user.currentYield != 0) {
         uint256 tokenYield = getTokenYield(tokenIds[i]);
@@ -162,11 +132,11 @@ contract StakingSimple is Ownable, ReentrancyGuard {
   }
 
   //Take rarity weight and asign it to staked token
-  function _setTokensValues(
-    uint256[] memory tokenIds,
+  function setTokensValues(
+    uint16[] memory tokenIds,
     uint256[] memory rarityWeight
-  ) internal {
-    for (uint256 i; i < tokenIds.length; i++) {
+  ) external onlyOwner {
+    for (uint16 i; i < tokenIds.length; i++) {
       if (rarityWeight[i] != 0 && rarityWeight[i] <= 3000 ether) {
         _tokensMultiplier[tokenIds[i]] = rarityWeight[i];
       }
@@ -174,8 +144,9 @@ contract StakingSimple is Ownable, ReentrancyGuard {
   }
 
   //Return yield for specific token ID
-  function getTokenYield(uint256 tokenId) public view returns (uint256) {
-    uint256 tokenYield = _tokensMultiplier[tokenId];
+  function getTokenYield(uint16 tokenId) public view returns (uint256) {
+    require(weightsAddress != address(0), "Weights contract is not set");
+    uint256 tokenYield = IWeights(weightsAddress).getRank(tokenId);
     if (tokenYield == 0) {
       tokenYield = baseRate;
     }
@@ -223,12 +194,8 @@ contract StakingSimple is Ownable, ReentrancyGuard {
   }
 
   // Returns token owner address (returns address(0) if token is not inside the gateway)
-  function ownerOf(address contractAddress, uint256 tokenId)
-    public
-    view
-    returns (address)
-  {
-    return _ownerOfToken[contractAddress][tokenId];
+  function ownerOf(uint16 tokenId) public view returns (address) {
+    return _ownerOfToken[tokenId];
   }
 
   //returns all accumulated user rewards
@@ -285,25 +252,17 @@ contract StakingSimple is Ownable, ReentrancyGuard {
 
   //return true if received signature address matches internal signerAddress
   function _validateSignatureMultiSig(
-    bytes[] memory signature,
-    address contractAddress,
-    uint256[] memory tokenIds,
+    bytes memory signature,
+    uint16[] memory tokenIds,
     uint256[] memory rarityWeight
   ) internal view returns (bool) {
-    for (uint256 i; i < tokenIds.length; i++) {
-      bytes32 messageHash = keccak256(
-        abi.encodePacked(contractAddress, tokenIds[i], rarityWeight[i])
-      );
-      bytes32 EthSignedMessageHash = ECDSA.toEthSignedMessageHash(messageHash);
-      address recoveredAddress = ECDSA.recover(
-        EthSignedMessageHash,
-        signature[i]
-      );
-      require(
-        (recoveredAddress != address(0) && recoveredAddress == signerAddress),
-        "Signature does not match"
-      );
-    }
+    bytes memory content = abi.encodePacked(tokenIds, rarityWeight);
+    bytes32 ethSignedMessageHash = ECDSA.toEthSignedMessageHash(content);
+    address recoveredAddress = ECDSA.recover(ethSignedMessageHash, signature);
+    require(
+      (recoveredAddress != address(0) && recoveredAddress == signerAddress),
+      "Signature does not match"
+    );
     return true;
   }
 
@@ -332,15 +291,12 @@ contract StakingSimple is Ownable, ReentrancyGuard {
   }
 
   // Function allows dev withdraw ERC721 in case of emergency.
-  function emergencyWithdraw(address tokenAddress, uint256[] memory tokenIds)
-    public
-    onlyOwner
-  {
+  function emergencyWithdraw(uint16[] memory tokenIds) public onlyOwner {
     require(tokenIds.length <= 50, "50 is max per tx");
     pauseDeposit(true);
-
+    address tokenAddress = address(baseNFT);
     for (uint256 i; i < tokenIds.length; i++) {
-      address receiver = _ownerOfToken[tokenAddress][tokenIds[i]];
+      address receiver = _ownerOfToken[tokenIds[i]];
       if (
         receiver != address(0) &&
         IERC721(tokenAddress).ownerOf(tokenIds[i]) == address(this)
@@ -363,5 +319,9 @@ contract StakingSimple is Ownable, ReentrancyGuard {
     bytes calldata
   ) external pure returns (bytes4) {
     return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
+  }
+
+  function setWeights(address _weightsAddress) public onlyOwner {
+    weightsAddress = _weightsAddress;
   }
 }

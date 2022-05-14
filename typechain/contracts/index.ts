@@ -6,4 +6,6 @@ export type { soaSol };
 import type * as soulSol from "./SOUL.sol";
 export type { soulSol };
 export type { Enumerator } from "./Enumerator";
+export type { IWeights } from "./IWeights";
+export type { SignedWeights } from "./SignedWeights";
 export type { StakingSimple } from "./StakingSimple";

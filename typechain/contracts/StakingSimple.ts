@@ -34,26 +34,29 @@ export interface StakingSimpleInterface extends utils.Interface {
     "acceleratedYield()": FunctionFragment;
     "baseNFT()": FunctionFragment;
     "baseRate()": FunctionFragment;
-    "deposit(bytes[],address,uint256[],uint256[])": FunctionFragment;
+    "deposit(uint16[])": FunctionFragment;
     "depositPaused()": FunctionFragment;
-    "emergencyWithdraw(address,uint256[])": FunctionFragment;
+    "emergencyWithdraw(uint16[])": FunctionFragment;
     "getAccumulatedAmount(address)": FunctionFragment;
     "getCurrentReward(address)": FunctionFragment;
     "getStakerTokens(address)": FunctionFragment;
     "getStakerYield(address)": FunctionFragment;
-    "getTokenYield(uint256)": FunctionFragment;
+    "getTokenYield(uint16)": FunctionFragment;
     "launchStaking()": FunctionFragment;
     "onERC721Received(address,address,uint256,bytes)": FunctionFragment;
     "owner()": FunctionFragment;
-    "ownerOf(address,uint256)": FunctionFragment;
+    "ownerOf(uint16)": FunctionFragment;
     "pauseDeposit(bool)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "setTokensValues(uint16[],uint256[])": FunctionFragment;
+    "setWeights(address)": FunctionFragment;
     "signerAddress()": FunctionFragment;
     "stakingLaunched()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "updateBaseYield(uint256)": FunctionFragment;
     "updateSignerAddress(address)": FunctionFragment;
-    "withdraw(address,uint256[])": FunctionFragment;
+    "weightsAddress()": FunctionFragment;
+    "withdraw(uint16[])": FunctionFragment;
   };
 
   getFunction(
@@ -78,11 +81,14 @@ export interface StakingSimpleInterface extends utils.Interface {
       | "ownerOf"
       | "pauseDeposit"
       | "renounceOwnership"
+      | "setTokensValues"
+      | "setWeights"
       | "signerAddress"
       | "stakingLaunched"
       | "transferOwnership"
       | "updateBaseYield"
       | "updateSignerAddress"
+      | "weightsAddress"
       | "withdraw"
   ): FunctionFragment;
 
@@ -106,7 +112,7 @@ export interface StakingSimpleInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "baseRate", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [BytesLike[], string, BigNumberish[], BigNumberish[]]
+    values: [BigNumberish[]]
   ): string;
   encodeFunctionData(
     functionFragment: "depositPaused",
@@ -114,7 +120,7 @@ export interface StakingSimpleInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "emergencyWithdraw",
-    values: [string, BigNumberish[]]
+    values: [BigNumberish[]]
   ): string;
   encodeFunctionData(
     functionFragment: "getAccumulatedAmount",
@@ -147,7 +153,7 @@ export interface StakingSimpleInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
-    values: [string, BigNumberish]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "pauseDeposit",
@@ -157,6 +163,11 @@ export interface StakingSimpleInterface extends utils.Interface {
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "setTokensValues",
+    values: [BigNumberish[], BigNumberish[]]
+  ): string;
+  encodeFunctionData(functionFragment: "setWeights", values: [string]): string;
   encodeFunctionData(
     functionFragment: "signerAddress",
     values?: undefined
@@ -178,8 +189,12 @@ export interface StakingSimpleInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "weightsAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "withdraw",
-    values: [string, BigNumberish[]]
+    values: [BigNumberish[]]
   ): string;
 
   decodeFunctionResult(
@@ -248,6 +263,11 @@ export interface StakingSimpleInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setTokensValues",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setWeights", data: BytesLike): Result;
+  decodeFunctionResult(
     functionFragment: "signerAddress",
     data: BytesLike
   ): Result;
@@ -265,6 +285,10 @@ export interface StakingSimpleInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "updateSignerAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "weightsAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
@@ -373,17 +397,13 @@ export interface StakingSimple extends BaseContract {
     baseRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      signature: BytesLike[],
-      contractAddress: string,
       tokenIds: BigNumberish[],
-      rarityWeight: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     depositPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     emergencyWithdraw(
-      tokenAddress: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -428,7 +448,6 @@ export interface StakingSimple extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
-      contractAddress: string,
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
@@ -439,6 +458,17 @@ export interface StakingSimple extends BaseContract {
     ): Promise<ContractTransaction>;
 
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setTokensValues(
+      tokenIds: BigNumberish[],
+      rarityWeight: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setWeights(
+      _weightsAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -461,8 +491,9 @@ export interface StakingSimple extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    weightsAddress(overrides?: CallOverrides): Promise<[string]>;
+
     withdraw(
-      contractAddress: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -481,17 +512,13 @@ export interface StakingSimple extends BaseContract {
   baseRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    signature: BytesLike[],
-    contractAddress: string,
     tokenIds: BigNumberish[],
-    rarityWeight: BigNumberish[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   depositPaused(overrides?: CallOverrides): Promise<boolean>;
 
   emergencyWithdraw(
-    tokenAddress: string,
     tokenIds: BigNumberish[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -532,11 +559,7 @@ export interface StakingSimple extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(
-    contractAddress: string,
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   pauseDeposit(
     _pause: boolean,
@@ -544,6 +567,17 @@ export interface StakingSimple extends BaseContract {
   ): Promise<ContractTransaction>;
 
   renounceOwnership(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setTokensValues(
+    tokenIds: BigNumberish[],
+    rarityWeight: BigNumberish[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setWeights(
+    _weightsAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -566,8 +600,9 @@ export interface StakingSimple extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  weightsAddress(overrides?: CallOverrides): Promise<string>;
+
   withdraw(
-    contractAddress: string,
     tokenIds: BigNumberish[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -585,18 +620,11 @@ export interface StakingSimple extends BaseContract {
 
     baseRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(
-      signature: BytesLike[],
-      contractAddress: string,
-      tokenIds: BigNumberish[],
-      rarityWeight: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deposit(tokenIds: BigNumberish[], overrides?: CallOverrides): Promise<void>;
 
     depositPaused(overrides?: CallOverrides): Promise<boolean>;
 
     emergencyWithdraw(
-      tokenAddress: string,
       tokenIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
@@ -638,15 +666,22 @@ export interface StakingSimple extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(
-      contractAddress: string,
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     pauseDeposit(_pause: boolean, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    setTokensValues(
+      tokenIds: BigNumberish[],
+      rarityWeight: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setWeights(
+      _weightsAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     signerAddress(overrides?: CallOverrides): Promise<string>;
 
@@ -667,8 +702,9 @@ export interface StakingSimple extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    weightsAddress(overrides?: CallOverrides): Promise<string>;
+
     withdraw(
-      contractAddress: string,
       tokenIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
@@ -732,17 +768,13 @@ export interface StakingSimple extends BaseContract {
     baseRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      signature: BytesLike[],
-      contractAddress: string,
       tokenIds: BigNumberish[],
-      rarityWeight: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     depositPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyWithdraw(
-      tokenAddress: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -787,7 +819,6 @@ export interface StakingSimple extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
-      contractAddress: string,
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -798,6 +829,17 @@ export interface StakingSimple extends BaseContract {
     ): Promise<BigNumber>;
 
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setTokensValues(
+      tokenIds: BigNumberish[],
+      rarityWeight: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setWeights(
+      _weightsAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -820,8 +862,9 @@ export interface StakingSimple extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    weightsAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     withdraw(
-      contractAddress: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -845,17 +888,13 @@ export interface StakingSimple extends BaseContract {
     baseRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      signature: BytesLike[],
-      contractAddress: string,
       tokenIds: BigNumberish[],
-      rarityWeight: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     depositPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      tokenAddress: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -900,7 +939,6 @@ export interface StakingSimple extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
-      contractAddress: string,
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -911,6 +949,17 @@ export interface StakingSimple extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setTokensValues(
+      tokenIds: BigNumberish[],
+      rarityWeight: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setWeights(
+      _weightsAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -933,8 +982,9 @@ export interface StakingSimple extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    weightsAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     withdraw(
-      contractAddress: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

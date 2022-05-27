@@ -1,6 +1,6 @@
 {
   "name": "@souls-of-akaso/contracts",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "author": "CmdrNFT <cmdrnft@protonmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
@@ -21,9 +21,10 @@
     "deploy:matic": "hardhat deploy --network matic --export-all deployments/networks.json",
     "deploy:goerli": "hardhat deploy --network goerli --export-all deployments/networks.json",
     "deploy:rinkeby": "hardhat deploy --network rinkeby --export-all deployments/networks.json",
+    "deploy:sepolia": "hardhat deploy --network sepolia --export-all deployments/networks.json",
     "start:dev": "hardhat node --network hardhat  --export-all deployments/networks.json",
     "test": "hardhat test",
-    "prepublish": "yarn compile && yarn build && cp contracts/* ."
+    "prepublishOnly": "yarn compile && yarn build && cp contracts/* ."
   },
   "dependencies": {
     "@divergencetech/ethier": "^0.27.0",
@@ -31,13 +32,14 @@
     "ethers": "^5.5.3"
   },
   "devDependencies": {
+    "@0xflicker/hardhat-etherscan": "^3.0.4-alpha.1",
     "@ethersproject/abi": "^5.0.0",
     "@ethersproject/bytes": "^5.0.0",
     "@ethersproject/hardware-wallets": "^5.0.14",
     "@ethersproject/providers": "^5.0.0",
     "@maticnetwork/maticjs": "^3.2.2",
     "@nomiclabs/hardhat-ethers": "^2.0.4",
-    "@nomiclabs/hardhat-etherscan": "^3.0.0",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts": "^4.4.1",
     "@typechain/ethers-v5": "^10.0.0",
@@ -61,10 +63,9 @@
     "eslint-plugin-promise": "^5.0.0",
     "ethereum-waffle": "^3.4.0",
     "ganache": "^7.0.0-beta.2",
-    "hardhat": "^2.9.3",
+    "hardhat": "^2.9.6",
     "hardhat-deploy": "^0.11.4",
     "hardhat-deploy-ethers": "^0.3.0-beta.13",
-    "hardhat-etherscan": "^1.0.1",
     "hardhat-gas-reporter": "^1.0.8",
     "lodash": "^4.17.15",
     "mocha": "^9.1.3",

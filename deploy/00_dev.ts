@@ -13,38 +13,57 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments;
 
   const { deployer, signer, beneficiary } = await getNamedAccounts();
-  console.log(`Deploying to ${network.name}`);
+  console.log(`Deploying to ${network.name} with ${deployer}`);
   const args = [
     nft_name(network.name),
     nft_symbol(network.name),
     metadata_url(network.name),
     nft_mint_price(network.name),
-    beneficiary,
+    signer,
+    [beneficiary],
+    [1],
     beneficiary,
   ];
 
   console.log(`Deploying SOA with arguments: ${JSON.stringify(args)}`);
+
   await deploy("Enumerator", {
     from: deployer,
     args: [],
-    log: true,
-    skipIfAlreadyDeployed: false,
   });
-  const deployed = await deploy("SOA", {
-    from: deployer,
-    args,
-    log: true,
-  });
+  let isDeployed;
+  let soaContractAddress = "";
+  try {
+    const d = await deployments.get("SOA");
+    const { differences } = await deployments.fetchIfDifferent("SOA", {
+      from: deployer,
+      args,
+    });
+    isDeployed = !differences;
+    if (isDeployed) {
+      soaContractAddress = d.address;
+    }
+  } catch (e) {
+    isDeployed = false;
+  }
+  console.log(`Current SOA is deployed: ${isDeployed}`);
+  if (!isDeployed) {
+    const deployed = await deploy("SOA", {
+      from: deployer,
+      args,
+    });
+    const ownerSigner = await ethers.getSigner(deployer);
+    const contract = SOA__factory.connect(deployed.address, ownerSigner);
+    await contract.addSigner(signer);
+    soaContractAddress = deployed.address;
+  }
 
-  const ownerSigner = await ethers.getSigner(deployer);
-  const contract = SOA__factory.connect(deployed.address, ownerSigner);
-  await contract.addSigner(signer);
-  if (network.name === "hardhat") {
+  if (network.name === "hardhat" || !soaContractAddress) {
     return;
   }
   try {
     await run("verify:verify", {
-      address: deployed.address,
+      address: soaContractAddress,
       constructorArguments: args,
     });
   } catch (err: any) {

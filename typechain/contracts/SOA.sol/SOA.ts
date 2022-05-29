@@ -58,6 +58,7 @@ export interface SOAInterface extends utils.Interface {
     "preSaleMaxMintPerAccount()": FunctionFragment;
     "presaleActive()": FunctionFragment;
     "presaleMint(address,bytes32,uint8,bytes)": FunctionFragment;
+    "presaleMintedByAddress(address)": FunctionFragment;
     "publicSaleActive()": FunctionFragment;
     "release(address)": FunctionFragment;
     "release(address,address)": FunctionFragment;
@@ -132,6 +133,7 @@ export interface SOAInterface extends utils.Interface {
       | "preSaleMaxMintPerAccount"
       | "presaleActive"
       | "presaleMint"
+      | "presaleMintedByAddress"
       | "publicSaleActive"
       | "release(address)"
       | "release(address,address)"
@@ -260,6 +262,10 @@ export interface SOAInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "presaleMint",
     values: [string, BytesLike, BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "presaleMintedByAddress",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "publicSaleActive",
@@ -483,6 +489,10 @@ export interface SOAInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "presaleMint",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "presaleMintedByAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -972,6 +982,11 @@ export interface SOA extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    presaleMintedByAddress(
+      _address: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     publicSaleActive(overrides?: CallOverrides): Promise<[boolean]>;
 
     "release(address)"(
@@ -1283,6 +1298,11 @@ export interface SOA extends BaseContract {
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  presaleMintedByAddress(
+    _address: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   publicSaleActive(overrides?: CallOverrides): Promise<boolean>;
 
   "release(address)"(
@@ -1582,6 +1602,11 @@ export interface SOA extends BaseContract {
       sig: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    presaleMintedByAddress(
+      _address: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     publicSaleActive(overrides?: CallOverrides): Promise<boolean>;
 
@@ -2001,6 +2026,11 @@ export interface SOA extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    presaleMintedByAddress(
+      _address: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     publicSaleActive(overrides?: CallOverrides): Promise<BigNumber>;
 
     "release(address)"(
@@ -2321,6 +2351,11 @@ export interface SOA extends BaseContract {
       mintAmount: BigNumberish,
       sig: BytesLike,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    presaleMintedByAddress(
+      _address: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     publicSaleActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;

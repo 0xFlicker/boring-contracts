@@ -41,7 +41,7 @@ contract SOA is
   bool public publicSaleActive = false;
 
   // mint count tracker
-  mapping(address => Monotonic.Increaser) presaleMinted;
+  mapping(address => Monotonic.Increaser) private presaleMinted;
 
   /**
     @notice Role of administrative users allowed to expel a Token from the
@@ -158,6 +158,17 @@ contract SOA is
 
   function setMintActive(bool _newMintActive) public onlyOwner {
     publicSaleActive = _newMintActive;
+  }
+
+  /**
+   * @notice Returns the number of minted tokens per presale address
+   */
+  function presaleMintedByAddress(address _address)
+    public
+    view
+    returns (uint256)
+  {
+    return presaleMinted[_address].current();
   }
 
   /**

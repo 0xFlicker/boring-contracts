@@ -68,6 +68,10 @@ export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
 export type { Enumerator } from "./contracts/Enumerator";
 export { Enumerator__factory } from "./factories/contracts/Enumerator__factory";
+export type { IERC721A } from "./contracts/IERC721A";
+export { IERC721A__factory } from "./factories/contracts/IERC721A__factory";
+export type { IERC721AQueryable } from "./contracts/IERC721AQueryable";
+export { IERC721AQueryable__factory } from "./factories/contracts/IERC721AQueryable__factory";
 export type { IWeights } from "./contracts/IWeights";
 export { IWeights__factory } from "./factories/contracts/IWeights__factory";
 export type { SignedWeights } from "./contracts/SignedWeights";

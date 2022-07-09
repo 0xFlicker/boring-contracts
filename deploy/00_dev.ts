@@ -13,6 +13,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy } = deployments;
 
   const { deployer, signer, beneficiary } = await getNamedAccounts();
+  if (network.name === "mainnet") {
+    return;
+  }
   console.log(`Deploying to ${network.name} with ${deployer}`);
   const args = [
     nft_name(network.name),

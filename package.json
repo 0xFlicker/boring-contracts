@@ -22,6 +22,7 @@
     "deploy:goerli": "hardhat deploy --network goerli --export-all deployments/networks.json",
     "deploy:rinkeby": "hardhat deploy --network rinkeby --export-all deployments/networks.json",
     "deploy:sepolia": "hardhat deploy --network sepolia --export-all deployments/networks.json",
+    "deploy:mainnet": "hardhat deploy --network mainnet --export-all deployments/networks.json",
     "start:dev": "hardhat node --network hardhat  --export-all deployments/networks.json",
     "test": "hardhat test",
     "prepublishOnly": "yarn compile && yarn build && cp contracts/* ."

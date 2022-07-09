@@ -4,6 +4,8 @@
 export * as soaSol from "./SOA.sol";
 export * as soulSol from "./SOUL.sol";
 export { Enumerator__factory } from "./Enumerator__factory";
+export { IERC721A__factory } from "./IERC721A__factory";
+export { IERC721AQueryable__factory } from "./IERC721AQueryable__factory";
 export { IWeights__factory } from "./IWeights__factory";
 export { SignedWeights__factory } from "./SignedWeights__factory";
 export { StakingSimple__factory } from "./StakingSimple__factory";

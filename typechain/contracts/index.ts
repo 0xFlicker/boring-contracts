@@ -6,6 +6,8 @@ export type { soaSol };
 import type * as soulSol from "./SOUL.sol";
 export type { soulSol };
 export type { Enumerator } from "./Enumerator";
+export type { IERC721A } from "./IERC721A";
+export type { IERC721AQueryable } from "./IERC721AQueryable";
 export type { IWeights } from "./IWeights";
 export type { SignedWeights } from "./SignedWeights";
 export type { StakingSimple } from "./StakingSimple";

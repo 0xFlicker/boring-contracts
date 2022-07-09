@@ -13,10 +13,6 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "SignerManager",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.SignerManager__factory>;
-    getContractFactory(
       name: "BaseTokenURI",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BaseTokenURI__factory>;
@@ -28,18 +24,6 @@ declare module "hardhat/types/runtime" {
       name: "ERC721APreApproval",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721APreApproval__factory>;
-    getContractFactory(
-      name: "ERC721Enumerator",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721Enumerator__factory>;
-    getContractFactory(
-      name: "IERC721NotQuiteEnumerable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC721NotQuiteEnumerable__factory>;
-    getContractFactory(
-      name: "ERC721Redeemer",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721Redeemer__factory>;
     getContractFactory(
       name: "FixedPriceSeller",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -56,22 +40,6 @@ declare module "hardhat/types/runtime" {
       name: "OwnerPausable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OwnerPausable__factory>;
-    getContractFactory(
-      name: "AccessControl",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.AccessControl__factory>;
-    getContractFactory(
-      name: "AccessControlEnumerable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.AccessControlEnumerable__factory>;
-    getContractFactory(
-      name: "IAccessControl",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IAccessControl__factory>;
-    getContractFactory(
-      name: "IAccessControlEnumerable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IAccessControlEnumerable__factory>;
     getContractFactory(
       name: "Ownable",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -92,14 +60,6 @@ declare module "hardhat/types/runtime" {
       name: "ERC2981",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC2981__factory>;
-    getContractFactory(
-      name: "ERC20",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC20__factory>;
-    getContractFactory(
-      name: "IERC20Metadata",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC20Metadata__factory>;
     getContractFactory(
       name: "IERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -125,55 +85,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
-      name: "Enumerator",
+      name: "StandardERC721A",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Enumerator__factory>;
-    getContractFactory(
-      name: "IERC721A",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC721A__factory>;
-    getContractFactory(
-      name: "IERC721AQueryable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC721AQueryable__factory>;
-    getContractFactory(
-      name: "IWeights",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IWeights__factory>;
-    getContractFactory(
-      name: "SignedWeights",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.SignedWeights__factory>;
-    getContractFactory(
-      name: "ITokenURIGenerator",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ITokenURIGenerator__factory>;
-    getContractFactory(
-      name: "SOA",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.SOA__factory>;
-    getContractFactory(
-      name: "SOUL",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.SOUL__factory>;
-    getContractFactory(
-      name: "StakingRewardsSource",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.StakingRewardsSource__factory>;
-    getContractFactory(
-      name: "StakingSimple",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.StakingSimple__factory>;
+    ): Promise<Contracts.StandardERC721A__factory>;
     getContractFactory(
       name: "ERC721A",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721A__factory>;
 
-    getContractAt(
-      name: "SignerManager",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SignerManager>;
     getContractAt(
       name: "BaseTokenURI",
       address: string,
@@ -189,21 +108,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC721APreApproval>;
-    getContractAt(
-      name: "ERC721Enumerator",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC721Enumerator>;
-    getContractAt(
-      name: "IERC721NotQuiteEnumerable",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC721NotQuiteEnumerable>;
-    getContractAt(
-      name: "ERC721Redeemer",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC721Redeemer>;
     getContractAt(
       name: "FixedPriceSeller",
       address: string,
@@ -224,26 +128,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.OwnerPausable>;
-    getContractAt(
-      name: "AccessControl",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.AccessControl>;
-    getContractAt(
-      name: "AccessControlEnumerable",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.AccessControlEnumerable>;
-    getContractAt(
-      name: "IAccessControl",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IAccessControl>;
-    getContractAt(
-      name: "IAccessControlEnumerable",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IAccessControlEnumerable>;
     getContractAt(
       name: "Ownable",
       address: string,
@@ -269,16 +153,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC2981>;
-    getContractAt(
-      name: "ERC20",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC20>;
-    getContractAt(
-      name: "IERC20Metadata",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC20Metadata>;
     getContractAt(
       name: "IERC20",
       address: string,
@@ -310,55 +184,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
-      name: "Enumerator",
+      name: "StandardERC721A",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Enumerator>;
-    getContractAt(
-      name: "IERC721A",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC721A>;
-    getContractAt(
-      name: "IERC721AQueryable",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC721AQueryable>;
-    getContractAt(
-      name: "IWeights",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IWeights>;
-    getContractAt(
-      name: "SignedWeights",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SignedWeights>;
-    getContractAt(
-      name: "ITokenURIGenerator",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ITokenURIGenerator>;
-    getContractAt(
-      name: "SOA",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SOA>;
-    getContractAt(
-      name: "SOUL",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SOUL>;
-    getContractAt(
-      name: "StakingRewardsSource",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.StakingRewardsSource>;
-    getContractAt(
-      name: "StakingSimple",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.StakingSimple>;
+    ): Promise<Contracts.StandardERC721A>;
     getContractAt(
       name: "ERC721A",
       address: string,

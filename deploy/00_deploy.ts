@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { SOA__factory } from "../typechain";
+import { StandardERC721A__factory } from "../typechain";
 import {
   nft_name,
   nft_symbol,
@@ -22,7 +22,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     nft_symbol(network.name),
     metadata_url(network.name),
     nft_mint_price(network.name),
-    signer,
     [beneficiary],
     [1],
     beneficiary,
@@ -35,38 +34,43 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [],
   });
   let isDeployed;
-  let soaContractAddress = "";
+  let nftContractAddress = "";
   try {
-    const d = await deployments.get("SOA");
-    const { differences } = await deployments.fetchIfDifferent("SOA", {
-      from: deployer,
-      args,
-    });
+    const d = await deployments.get("StandardERC721A");
+    const { differences } = await deployments.fetchIfDifferent(
+      "StandardERC721A",
+      {
+        from: deployer,
+        args,
+      }
+    );
     isDeployed = !differences;
     if (isDeployed) {
-      soaContractAddress = d.address;
+      nftContractAddress = d.address;
     }
   } catch (e) {
     isDeployed = false;
   }
-  console.log(`Current SOA is deployed: ${isDeployed}`);
+  console.log(`Current NFT is deployed: ${isDeployed}`);
   if (!isDeployed) {
-    const deployed = await deploy("SOA", {
+    const deployed = await deploy("StandardERC721A", {
       from: deployer,
       args,
     });
     const ownerSigner = await ethers.getSigner(deployer);
-    const contract = SOA__factory.connect(deployed.address, ownerSigner);
-    await contract.addSigner(signer);
-    soaContractAddress = deployed.address;
+    const contract = StandardERC721A__factory.connect(
+      deployed.address,
+      ownerSigner
+    );
+    nftContractAddress = deployed.address;
   }
 
-  if (network.name === "hardhat" || !soaContractAddress) {
+  if (network.name === "hardhat" || !nftContractAddress) {
     return;
   }
   try {
     await run("verify:verify", {
-      address: soaContractAddress,
+      address: nftContractAddress,
       constructorArguments: args,
     });
   } catch (err: any) {

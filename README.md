@@ -1,6 +1,6 @@
 # Introduction
 
-The SoA contracts
+Completely boring, yet functional ERC721A contract
 
 # Prerequisites
 
@@ -15,6 +15,12 @@ Run:
 yarn
 ```
 
+In addition, the following services are needed:
+
+- IPFS pinning for metadata / images and a basetokenURI pointing into ipfs://
+- RPC endpoint for deployment. Sign up at infura or alchemy for a free endpoint
+- Etherscan free API key https://etherscan.io/apis
+
 # Configuration
 
 Copy the `.env.example` file:
@@ -23,7 +29,13 @@ Copy the `.env.example` file:
 cp .env.example .env
 ```
 
-This is enough to get a local hardhat node running.
+Update the fields in the .env file
+
+# Deployment
+
+```
+yarn deploy
+```
 
 # Contributing
 
@@ -61,13 +73,9 @@ Set the following environment variables:
 ```
 MNEMONIC_RINKEBY=seed phrase....
 ETH_NODE_URI_RINKEBY=https://eth-rinkeby.alchemyapi.io/v2/apikeyhere
-# Can be anything
 NFT_NAME_RINKEBY=TestToken
-# Can be anything
 NFT_SYMBOL_RINKEBY=TT
-# Can be anything, but nice for it to return real metadata (see https://github.com/souls-of-akaso/lambdas)
 METADATA_URI_RINKEBY=https://example.xyz/
-# Set a prive or 0 for free (price is in wei)
 MINT_PRICE_RINKEBY=0
 ```
 

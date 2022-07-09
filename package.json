@@ -1,11 +1,11 @@
 {
-  "name": "@souls-of-akaso/contracts",
+  "name": "@0xflicker/contracts",
   "version": "0.0.15",
   "author": "CmdrNFT <cmdrnft@protonmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "git://github.com/souls-of-akaso/contracts.git",
+  "repository": "git://github.com/0xflicker/contracts.git",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },

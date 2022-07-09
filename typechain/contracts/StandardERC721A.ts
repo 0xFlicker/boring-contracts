@@ -25,26 +25,16 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-} from "../../common";
+} from "../common";
 
-export interface SOAInterface extends utils.Interface {
+export interface StandardERC721AInterface extends utils.Interface {
   functions: {
-    "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "EXPULSION_ROLE()": FunctionFragment;
-    "addSigner(address)": FunctionFragment;
-    "alreadyMinted(address,bytes32)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "baseTokenURI()": FunctionFragment;
     "cost()": FunctionFragment;
-    "expelFromSeeking(uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
-    "getRoleAdmin(bytes32)": FunctionFragment;
-    "getRoleMember(bytes32,uint256)": FunctionFragment;
-    "getRoleMemberCount(bytes32)": FunctionFragment;
     "gift(uint256[],address[])": FunctionFragment;
-    "grantRole(bytes32,address)": FunctionFragment;
-    "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "maxMint()": FunctionFragment;
     "maxSupply()": FunctionFragment;
@@ -55,41 +45,25 @@ export interface SOAInterface extends utils.Interface {
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "payee(uint256)": FunctionFragment;
-    "preSaleMaxMintPerAccount()": FunctionFragment;
-    "presaleActive()": FunctionFragment;
-    "presaleMint(address,bytes32,uint8,bytes)": FunctionFragment;
-    "presaleMintedByAddress(address)": FunctionFragment;
     "publicSaleActive()": FunctionFragment;
     "release(address)": FunctionFragment;
     "release(address,address)": FunctionFragment;
     "released(address,address)": FunctionFragment;
     "released(address)": FunctionFragment;
-    "removeSigner(address)": FunctionFragment;
-    "renderingContract()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "renounceRole(bytes32,address)": FunctionFragment;
-    "revokeRole(bytes32,address)": FunctionFragment;
     "royaltyInfo(uint256,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
-    "safeTransferWhileSeeking(address,address,uint256)": FunctionFragment;
-    "seekingOpen()": FunctionFragment;
-    "seekingPeriod(uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBaseTokenURI(string)": FunctionFragment;
     "setCost(uint256)": FunctionFragment;
     "setMaxMint(uint256)": FunctionFragment;
     "setMaxSupply(uint256)": FunctionFragment;
     "setMintActive(bool)": FunctionFragment;
-    "setPreSaleMaxMintPerAccount(uint256)": FunctionFragment;
-    "setPresaleActive(bool)": FunctionFragment;
-    "setRenderingContract(address)": FunctionFragment;
     "setRoyaltyInfo(address,uint96)": FunctionFragment;
-    "setSeekingOpen(bool)": FunctionFragment;
     "shares(address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
-    "toggleSeeking(uint256[])": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "totalReleased(address)": FunctionFragment;
     "totalReleased()": FunctionFragment;
@@ -98,28 +72,17 @@ export interface SOAInterface extends utils.Interface {
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unpause()": FunctionFragment;
-    "usedMessages(bytes32)": FunctionFragment;
     "withdrawSplit()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "DEFAULT_ADMIN_ROLE"
-      | "EXPULSION_ROLE"
-      | "addSigner"
-      | "alreadyMinted"
       | "approve"
       | "balanceOf"
       | "baseTokenURI"
       | "cost"
-      | "expelFromSeeking"
       | "getApproved"
-      | "getRoleAdmin"
-      | "getRoleMember"
-      | "getRoleMemberCount"
       | "gift"
-      | "grantRole"
-      | "hasRole"
       | "isApprovedForAll"
       | "maxMint"
       | "maxSupply"
@@ -130,41 +93,25 @@ export interface SOAInterface extends utils.Interface {
       | "pause"
       | "paused"
       | "payee"
-      | "preSaleMaxMintPerAccount"
-      | "presaleActive"
-      | "presaleMint"
-      | "presaleMintedByAddress"
       | "publicSaleActive"
       | "release(address)"
       | "release(address,address)"
       | "released(address,address)"
       | "released(address)"
-      | "removeSigner"
-      | "renderingContract"
       | "renounceOwnership"
-      | "renounceRole"
-      | "revokeRole"
       | "royaltyInfo"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
-      | "safeTransferWhileSeeking"
-      | "seekingOpen"
-      | "seekingPeriod"
       | "setApprovalForAll"
       | "setBaseTokenURI"
       | "setCost"
       | "setMaxMint"
       | "setMaxSupply"
       | "setMintActive"
-      | "setPreSaleMaxMintPerAccount"
-      | "setPresaleActive"
-      | "setRenderingContract"
       | "setRoyaltyInfo"
-      | "setSeekingOpen"
       | "shares"
       | "supportsInterface"
       | "symbol"
-      | "toggleSeeking"
       | "tokenURI"
       | "totalReleased(address)"
       | "totalReleased()"
@@ -173,23 +120,9 @@ export interface SOAInterface extends utils.Interface {
       | "transferFrom"
       | "transferOwnership"
       | "unpause"
-      | "usedMessages"
       | "withdrawSplit"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "EXPULSION_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "addSigner", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "alreadyMinted",
-    values: [string, BytesLike]
-  ): string;
   encodeFunctionData(
     functionFragment: "approve",
     values: [string, BigNumberish]
@@ -201,36 +134,12 @@ export interface SOAInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "cost", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "expelFromSeeking",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getRoleAdmin",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRoleMember",
-    values: [BytesLike, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRoleMemberCount",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
     functionFragment: "gift",
     values: [BigNumberish[], string[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "grantRole",
-    values: [BytesLike, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "hasRole",
-    values: [BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
@@ -252,22 +161,6 @@ export interface SOAInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
   encodeFunctionData(
-    functionFragment: "preSaleMaxMintPerAccount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "presaleActive",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "presaleMint",
-    values: [string, BytesLike, BigNumberish, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "presaleMintedByAddress",
-    values: [string]
-  ): string;
-  encodeFunctionData(
     functionFragment: "publicSaleActive",
     values?: undefined
   ): string;
@@ -288,24 +181,8 @@ export interface SOAInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "removeSigner",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renderingContract",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceRole",
-    values: [BytesLike, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "revokeRole",
-    values: [BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "royaltyInfo",
@@ -318,18 +195,6 @@ export interface SOAInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256,bytes)",
     values: [string, string, BigNumberish, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "safeTransferWhileSeeking",
-    values: [string, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "seekingOpen",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "seekingPeriod",
-    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
@@ -356,24 +221,8 @@ export interface SOAInterface extends utils.Interface {
     values: [boolean]
   ): string;
   encodeFunctionData(
-    functionFragment: "setPreSaleMaxMintPerAccount",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setPresaleActive",
-    values: [boolean]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRenderingContract",
-    values: [string]
-  ): string;
-  encodeFunctionData(
     functionFragment: "setRoyaltyInfo",
     values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setSeekingOpen",
-    values: [boolean]
   ): string;
   encodeFunctionData(functionFragment: "shares", values: [string]): string;
   encodeFunctionData(
@@ -381,10 +230,6 @@ export interface SOAInterface extends utils.Interface {
     values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "toggleSeeking",
-    values: [BigNumberish[]]
-  ): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
     values: [BigNumberish]
@@ -415,27 +260,10 @@ export interface SOAInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "usedMessages",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
     functionFragment: "withdrawSplit",
     values?: undefined
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "EXPULSION_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "addSigner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "alreadyMinted",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
@@ -444,28 +272,10 @@ export interface SOAInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "cost", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "expelFromSeeking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRoleAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRoleMember",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRoleMemberCount",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "gift", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
@@ -479,22 +289,6 @@ export interface SOAInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "preSaleMaxMintPerAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "presaleActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "presaleMint",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "presaleMintedByAddress",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "publicSaleActive",
     data: BytesLike
@@ -516,22 +310,9 @@ export interface SOAInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "removeSigner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "renderingContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceRole",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "royaltyInfo",
     data: BytesLike
@@ -542,18 +323,6 @@ export interface SOAInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom(address,address,uint256,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "safeTransferWhileSeeking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "seekingOpen",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "seekingPeriod",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -575,23 +344,7 @@ export interface SOAInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setPreSaleMaxMintPerAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setPresaleActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setRenderingContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "setRoyaltyInfo",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setSeekingOpen",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
@@ -600,10 +353,6 @@ export interface SOAInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "toggleSeeking",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalReleased(address)",
@@ -631,10 +380,6 @@ export interface SOAInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "usedMessages",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "withdrawSplit",
     data: BytesLike
   ): Result;
@@ -643,37 +388,25 @@ export interface SOAInterface extends utils.Interface {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "ERC20PaymentReleased(address,address,uint256)": EventFragment;
-    "Expelled(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
     "PayeeAdded(address,uint256)": EventFragment;
     "PaymentReceived(address,uint256)": EventFragment;
     "PaymentReleased(address,uint256)": EventFragment;
-    "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
-    "RoleGranted(bytes32,address,address)": EventFragment;
-    "RoleRevoked(bytes32,address,address)": EventFragment;
-    "Seeking(uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "Unpaused(address)": EventFragment;
-    "Unseeking(uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20PaymentReleased"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Expelled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PayeeAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PaymentReceived"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PaymentReleased"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Seeking"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Unseeking"): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -712,13 +445,6 @@ export type ERC20PaymentReleasedEvent = TypedEvent<
 
 export type ERC20PaymentReleasedEventFilter =
   TypedEventFilter<ERC20PaymentReleasedEvent>;
-
-export interface ExpelledEventObject {
-  tokenId: BigNumber;
-}
-export type ExpelledEvent = TypedEvent<[BigNumber], ExpelledEventObject>;
-
-export type ExpelledEventFilter = TypedEventFilter<ExpelledEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -772,50 +498,6 @@ export type PaymentReleasedEvent = TypedEvent<
 
 export type PaymentReleasedEventFilter = TypedEventFilter<PaymentReleasedEvent>;
 
-export interface RoleAdminChangedEventObject {
-  role: string;
-  previousAdminRole: string;
-  newAdminRole: string;
-}
-export type RoleAdminChangedEvent = TypedEvent<
-  [string, string, string],
-  RoleAdminChangedEventObject
->;
-
-export type RoleAdminChangedEventFilter =
-  TypedEventFilter<RoleAdminChangedEvent>;
-
-export interface RoleGrantedEventObject {
-  role: string;
-  account: string;
-  sender: string;
-}
-export type RoleGrantedEvent = TypedEvent<
-  [string, string, string],
-  RoleGrantedEventObject
->;
-
-export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
-
-export interface RoleRevokedEventObject {
-  role: string;
-  account: string;
-  sender: string;
-}
-export type RoleRevokedEvent = TypedEvent<
-  [string, string, string],
-  RoleRevokedEventObject
->;
-
-export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
-
-export interface SeekingEventObject {
-  tokenId: BigNumber;
-}
-export type SeekingEvent = TypedEvent<[BigNumber], SeekingEventObject>;
-
-export type SeekingEventFilter = TypedEventFilter<SeekingEvent>;
-
 export interface TransferEventObject {
   from: string;
   to: string;
@@ -835,19 +517,12 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
-export interface UnseekingEventObject {
-  tokenId: BigNumber;
-}
-export type UnseekingEvent = TypedEvent<[BigNumber], UnseekingEventObject>;
-
-export type UnseekingEventFilter = TypedEventFilter<UnseekingEvent>;
-
-export interface SOA extends BaseContract {
+export interface StandardERC721A extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: SOAInterface;
+  interface: StandardERC721AInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -869,21 +544,6 @@ export interface SOA extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
-    EXPULSION_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
-    addSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    alreadyMinted(
-      to: string,
-      nonce: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -896,46 +556,16 @@ export interface SOA extends BaseContract {
 
     cost(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    expelFromSeeking(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
-
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
-
-    getRoleMember(
-      role: BytesLike,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    getRoleMemberCount(
-      role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
 
     gift(
       _mintAmount: BigNumberish[],
       recipient: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
 
     isApprovedForAll(
       owner: string,
@@ -970,23 +600,6 @@ export interface SOA extends BaseContract {
 
     payee(index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
-    preSaleMaxMintPerAccount(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    presaleActive(overrides?: CallOverrides): Promise<[boolean]>;
-
-    presaleMint(
-      to: string,
-      nonce: BytesLike,
-      mintAmount: BigNumberish,
-      sig: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    presaleMintedByAddress(
-      _address: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     publicSaleActive(overrides?: CallOverrides): Promise<[boolean]>;
 
     "release(address)"(
@@ -1011,26 +624,7 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    removeSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    renderingContract(overrides?: CallOverrides): Promise<[string]>;
-
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    revokeRole(
-      role: BytesLike,
-      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -1054,26 +648,6 @@ export interface SOA extends BaseContract {
       _data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    safeTransferWhileSeeking(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    seekingOpen(overrides?: CallOverrides): Promise<[boolean]>;
-
-    seekingPeriod(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, BigNumber] & {
-        seeking: boolean;
-        current: BigNumber;
-        total: BigNumber;
-      }
-    >;
 
     setApprovalForAll(
       operator: string,
@@ -1106,29 +680,9 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setPreSaleMaxMintPerAccount(
-      _newPreSaleMaxMintPerAccount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    setPresaleActive(
-      _newPresaleActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    setRenderingContract(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     setRoyaltyInfo(
       receiver: string,
       feeBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    setSeekingOpen(
-      open: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -1140,11 +694,6 @@ export interface SOA extends BaseContract {
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
-
-    toggleSeeking(
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -1178,30 +727,10 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    usedMessages(
-      arg0: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     withdrawSplit(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
-
-  DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-  EXPULSION_ROLE(overrides?: CallOverrides): Promise<string>;
-
-  addSigner(
-    signer: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  alreadyMinted(
-    to: string,
-    nonce: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
 
   approve(
     to: string,
@@ -1215,46 +744,16 @@ export interface SOA extends BaseContract {
 
   cost(overrides?: CallOverrides): Promise<BigNumber>;
 
-  expelFromSeeking(
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   getApproved(
     tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-  getRoleMember(
-    role: BytesLike,
-    index: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  getRoleMemberCount(
-    role: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
 
   gift(
     _mintAmount: BigNumberish[],
     recipient: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  hasRole(
-    role: BytesLike,
-    account: string,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
 
   isApprovedForAll(
     owner: string,
@@ -1286,23 +785,6 @@ export interface SOA extends BaseContract {
 
   payee(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  preSaleMaxMintPerAccount(overrides?: CallOverrides): Promise<BigNumber>;
-
-  presaleActive(overrides?: CallOverrides): Promise<boolean>;
-
-  presaleMint(
-    to: string,
-    nonce: BytesLike,
-    mintAmount: BigNumberish,
-    sig: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  presaleMintedByAddress(
-    _address: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
   publicSaleActive(overrides?: CallOverrides): Promise<boolean>;
 
   "release(address)"(
@@ -1327,26 +809,7 @@ export interface SOA extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  removeSigner(
-    signer: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  renderingContract(overrides?: CallOverrides): Promise<string>;
-
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  revokeRole(
-    role: BytesLike,
-    account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -1370,26 +833,6 @@ export interface SOA extends BaseContract {
     _data: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  safeTransferWhileSeeking(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  seekingOpen(overrides?: CallOverrides): Promise<boolean>;
-
-  seekingPeriod(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [boolean, BigNumber, BigNumber] & {
-      seeking: boolean;
-      current: BigNumber;
-      total: BigNumber;
-    }
-  >;
 
   setApprovalForAll(
     operator: string,
@@ -1422,29 +865,9 @@ export interface SOA extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setPreSaleMaxMintPerAccount(
-    _newPreSaleMaxMintPerAccount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  setPresaleActive(
-    _newPresaleActive: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  setRenderingContract(
-    _contract: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   setRoyaltyInfo(
     receiver: string,
     feeBasisPoints: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  setSeekingOpen(
-    open: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -1456,11 +879,6 @@ export interface SOA extends BaseContract {
   ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
-
-  toggleSeeking(
-    tokenIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -1491,25 +909,11 @@ export interface SOA extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  usedMessages(arg0: BytesLike, overrides?: CallOverrides): Promise<boolean>;
-
   withdrawSplit(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    EXPULSION_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    addSigner(signer: string, overrides?: CallOverrides): Promise<void>;
-
-    alreadyMinted(
-      to: string,
-      nonce: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -1522,46 +926,16 @@ export interface SOA extends BaseContract {
 
     cost(overrides?: CallOverrides): Promise<BigNumber>;
 
-    expelFromSeeking(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-    getRoleMember(
-      role: BytesLike,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    getRoleMemberCount(
-      role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     gift(
       _mintAmount: BigNumberish[],
       recipient: string[],
       overrides?: CallOverrides
     ): Promise<void>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
 
     isApprovedForAll(
       owner: string,
@@ -1591,23 +965,6 @@ export interface SOA extends BaseContract {
 
     payee(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    preSaleMaxMintPerAccount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    presaleActive(overrides?: CallOverrides): Promise<boolean>;
-
-    presaleMint(
-      to: string,
-      nonce: BytesLike,
-      mintAmount: BigNumberish,
-      sig: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    presaleMintedByAddress(
-      _address: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     publicSaleActive(overrides?: CallOverrides): Promise<boolean>;
 
     "release(address)"(
@@ -1632,23 +989,7 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    removeSigner(signer: string, overrides?: CallOverrides): Promise<void>;
-
-    renderingContract(overrides?: CallOverrides): Promise<string>;
-
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     royaltyInfo(
       _tokenId: BigNumberish,
@@ -1670,26 +1011,6 @@ export interface SOA extends BaseContract {
       _data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    safeTransferWhileSeeking(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    seekingOpen(overrides?: CallOverrides): Promise<boolean>;
-
-    seekingPeriod(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, BigNumber] & {
-        seeking: boolean;
-        current: BigNumber;
-        total: BigNumber;
-      }
-    >;
 
     setApprovalForAll(
       operator: string,
@@ -1719,28 +1040,11 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setPreSaleMaxMintPerAccount(
-      _newPreSaleMaxMintPerAccount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setPresaleActive(
-      _newPresaleActive: boolean,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setRenderingContract(
-      _contract: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     setRoyaltyInfo(
       receiver: string,
       feeBasisPoints: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    setSeekingOpen(open: boolean, overrides?: CallOverrides): Promise<void>;
 
     shares(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1750,11 +1054,6 @@ export interface SOA extends BaseContract {
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
-
-    toggleSeeking(
-      tokenIds: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -1782,8 +1081,6 @@ export interface SOA extends BaseContract {
     ): Promise<void>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
-
-    usedMessages(arg0: BytesLike, overrides?: CallOverrides): Promise<boolean>;
 
     withdrawSplit(overrides?: CallOverrides): Promise<void>;
   };
@@ -1822,9 +1119,6 @@ export interface SOA extends BaseContract {
       amount?: null
     ): ERC20PaymentReleasedEventFilter;
 
-    "Expelled(uint256)"(tokenId?: BigNumberish | null): ExpelledEventFilter;
-    Expelled(tokenId?: BigNumberish | null): ExpelledEventFilter;
-
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -1855,42 +1149,6 @@ export interface SOA extends BaseContract {
     ): PaymentReleasedEventFilter;
     PaymentReleased(to?: null, amount?: null): PaymentReleasedEventFilter;
 
-    "RoleAdminChanged(bytes32,bytes32,bytes32)"(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null
-    ): RoleAdminChangedEventFilter;
-    RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null
-    ): RoleAdminChangedEventFilter;
-
-    "RoleGranted(bytes32,address,address)"(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleGrantedEventFilter;
-    RoleGranted(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleGrantedEventFilter;
-
-    "RoleRevoked(bytes32,address,address)"(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleRevokedEventFilter;
-    RoleRevoked(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleRevokedEventFilter;
-
-    "Seeking(uint256)"(tokenId?: BigNumberish | null): SeekingEventFilter;
-    Seeking(tokenId?: BigNumberish | null): SeekingEventFilter;
-
     "Transfer(address,address,uint256)"(
       from?: string | null,
       to?: string | null,
@@ -1904,27 +1162,9 @@ export interface SOA extends BaseContract {
 
     "Unpaused(address)"(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
-
-    "Unseeking(uint256)"(tokenId?: BigNumberish | null): UnseekingEventFilter;
-    Unseeking(tokenId?: BigNumberish | null): UnseekingEventFilter;
   };
 
   estimateGas: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    EXPULSION_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    addSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    alreadyMinted(
-      to: string,
-      nonce: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -1937,29 +1177,8 @@ export interface SOA extends BaseContract {
 
     cost(overrides?: CallOverrides): Promise<BigNumber>;
 
-    expelFromSeeking(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getRoleAdmin(
-      role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getRoleMember(
-      role: BytesLike,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getRoleMemberCount(
-      role: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1967,18 +1186,6 @@ export interface SOA extends BaseContract {
       _mintAmount: BigNumberish[],
       recipient: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isApprovedForAll(
@@ -2014,23 +1221,6 @@ export interface SOA extends BaseContract {
 
     payee(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    preSaleMaxMintPerAccount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    presaleActive(overrides?: CallOverrides): Promise<BigNumber>;
-
-    presaleMint(
-      to: string,
-      nonce: BytesLike,
-      mintAmount: BigNumberish,
-      sig: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    presaleMintedByAddress(
-      _address: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     publicSaleActive(overrides?: CallOverrides): Promise<BigNumber>;
 
     "release(address)"(
@@ -2055,26 +1245,7 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    removeSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    renderingContract(overrides?: CallOverrides): Promise<BigNumber>;
-
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    revokeRole(
-      role: BytesLike,
-      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -2097,20 +1268,6 @@ export interface SOA extends BaseContract {
       tokenId: BigNumberish,
       _data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    safeTransferWhileSeeking(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    seekingOpen(overrides?: CallOverrides): Promise<BigNumber>;
-
-    seekingPeriod(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setApprovalForAll(
@@ -2144,29 +1301,9 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setPreSaleMaxMintPerAccount(
-      _newPreSaleMaxMintPerAccount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    setPresaleActive(
-      _newPresaleActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    setRenderingContract(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     setRoyaltyInfo(
       receiver: string,
       feeBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    setSeekingOpen(
-      open: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -2178,11 +1315,6 @@ export interface SOA extends BaseContract {
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    toggleSeeking(
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -2216,34 +1348,12 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    usedMessages(
-      arg0: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     withdrawSplit(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    DEFAULT_ADMIN_ROLE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    EXPULSION_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    addSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    alreadyMinted(
-      to: string,
-      nonce: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -2259,29 +1369,8 @@ export interface SOA extends BaseContract {
 
     cost(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    expelFromSeeking(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getRoleAdmin(
-      role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getRoleMember(
-      role: BytesLike,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getRoleMemberCount(
-      role: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2289,18 +1378,6 @@ export interface SOA extends BaseContract {
       _mintAmount: BigNumberish[],
       recipient: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
@@ -2339,25 +1416,6 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    preSaleMaxMintPerAccount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    presaleActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    presaleMint(
-      to: string,
-      nonce: BytesLike,
-      mintAmount: BigNumberish,
-      sig: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    presaleMintedByAddress(
-      _address: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     publicSaleActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "release(address)"(
@@ -2382,26 +1440,7 @@ export interface SOA extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    removeSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    renderingContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    revokeRole(
-      role: BytesLike,
-      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2424,20 +1463,6 @@ export interface SOA extends BaseContract {
       tokenId: BigNumberish,
       _data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    safeTransferWhileSeeking(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    seekingOpen(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    seekingPeriod(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
@@ -2471,29 +1496,9 @@ export interface SOA extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setPreSaleMaxMintPerAccount(
-      _newPreSaleMaxMintPerAccount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    setPresaleActive(
-      _newPresaleActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    setRenderingContract(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     setRoyaltyInfo(
       receiver: string,
       feeBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    setSeekingOpen(
-      open: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2508,11 +1513,6 @@ export interface SOA extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    toggleSeeking(
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -2544,11 +1544,6 @@ export interface SOA extends BaseContract {
 
     unpause(
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    usedMessages(
-      arg0: BytesLike,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     withdrawSplit(

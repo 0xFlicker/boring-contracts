@@ -1,6 +1,5 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { StandardERC721A__factory } from "../typechain";
 import {
   nft_name,
   nft_symbol,
@@ -12,7 +11,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, network, run, ethers } = hre;
   const { deploy } = deployments;
 
-  const { deployer, signer, beneficiary } = await getNamedAccounts();
+  const { deployer, beneficiary } = await getNamedAccounts();
   if (network.name === "mainnet") {
     return;
   }
@@ -47,15 +46,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   }
   console.log(`Current NFT is deployed: ${isDeployed}`);
   if (!isDeployed) {
+    console.log(
+      "Deploying smart contract and waiting for it to be confirmed. This may take up to a minute."
+    );
     const deployed = await deploy("StandardERC721A", {
       from: deployer,
       args,
+      waitConfirmations: 5,
     });
-    const ownerSigner = await ethers.getSigner(deployer);
-    const contract = StandardERC721A__factory.connect(
-      deployed.address,
-      ownerSigner
-    );
     nftContractAddress = deployed.address;
   }
 

@@ -27,12 +27,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     beneficiary,
   ];
 
-  console.log(`Deploying SOA with arguments: ${JSON.stringify(args)}`);
-
-  await deploy("Enumerator", {
-    from: deployer,
-    args: [],
-  });
   let isDeployed;
   let nftContractAddress = "";
   try {

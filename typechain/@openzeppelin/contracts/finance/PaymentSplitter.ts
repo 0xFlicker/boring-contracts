@@ -29,6 +29,8 @@ import type {
 export interface PaymentSplitterInterface extends utils.Interface {
   functions: {
     "payee(uint256)": FunctionFragment;
+    "releasable(address)": FunctionFragment;
+    "releasable(address,address)": FunctionFragment;
     "release(address)": FunctionFragment;
     "release(address,address)": FunctionFragment;
     "released(address,address)": FunctionFragment;
@@ -42,6 +44,8 @@ export interface PaymentSplitterInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "payee"
+      | "releasable(address)"
+      | "releasable(address,address)"
       | "release(address)"
       | "release(address,address)"
       | "released(address,address)"
@@ -53,6 +57,14 @@ export interface PaymentSplitterInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "releasable(address)",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "releasable(address,address)",
+    values: [string, string]
+  ): string;
   encodeFunctionData(
     functionFragment: "release(address)",
     values: [string]
@@ -84,6 +96,14 @@ export interface PaymentSplitterInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "releasable(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "releasable(address,address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "release(address)",
     data: BytesLike
@@ -202,6 +222,17 @@ export interface PaymentSplitter extends BaseContract {
   functions: {
     payee(index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
+    "releasable(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "releasable(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     "release(address)"(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -238,6 +269,17 @@ export interface PaymentSplitter extends BaseContract {
 
   payee(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  "releasable(address)"(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "releasable(address,address)"(
+    token: string,
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   "release(address)"(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -273,6 +315,17 @@ export interface PaymentSplitter extends BaseContract {
 
   callStatic: {
     payee(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    "releasable(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "releasable(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     "release(address)"(
       account: string,
@@ -342,6 +395,17 @@ export interface PaymentSplitter extends BaseContract {
   estimateGas: {
     payee(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
+    "releasable(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "releasable(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     "release(address)"(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -379,6 +443,17 @@ export interface PaymentSplitter extends BaseContract {
   populateTransaction: {
     payee(
       index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "releasable(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "releasable(address,address)"(
+      token: string,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

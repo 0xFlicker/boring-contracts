@@ -152,11 +152,13 @@ export interface ERC721APreApprovalInterface extends utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
+    "ConsecutiveTransfer(uint256,uint256,address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConsecutiveTransfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -183,6 +185,20 @@ export type ApprovalForAllEvent = TypedEvent<
 >;
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
+
+export interface ConsecutiveTransferEventObject {
+  fromTokenId: BigNumber;
+  toTokenId: BigNumber;
+  from: string;
+  to: string;
+}
+export type ConsecutiveTransferEvent = TypedEvent<
+  [BigNumber, BigNumber, string, string],
+  ConsecutiveTransferEventObject
+>;
+
+export type ConsecutiveTransferEventFilter =
+  TypedEventFilter<ConsecutiveTransferEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -440,6 +456,19 @@ export interface ERC721APreApproval extends BaseContract {
       operator?: string | null,
       approved?: null
     ): ApprovalForAllEventFilter;
+
+    "ConsecutiveTransfer(uint256,uint256,address,address)"(
+      fromTokenId?: BigNumberish | null,
+      toTokenId?: null,
+      from?: string | null,
+      to?: string | null
+    ): ConsecutiveTransferEventFilter;
+    ConsecutiveTransfer(
+      fromTokenId?: BigNumberish | null,
+      toTokenId?: null,
+      from?: string | null,
+      to?: string | null
+    ): ConsecutiveTransferEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: string | null,

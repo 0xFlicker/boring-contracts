@@ -46,6 +46,8 @@ export interface StandardERC721AInterface extends utils.Interface {
     "paused()": FunctionFragment;
     "payee(uint256)": FunctionFragment;
     "publicSaleActive()": FunctionFragment;
+    "releasable(address)": FunctionFragment;
+    "releasable(address,address)": FunctionFragment;
     "release(address)": FunctionFragment;
     "release(address,address)": FunctionFragment;
     "released(address,address)": FunctionFragment;
@@ -94,6 +96,8 @@ export interface StandardERC721AInterface extends utils.Interface {
       | "paused"
       | "payee"
       | "publicSaleActive"
+      | "releasable(address)"
+      | "releasable(address,address)"
       | "release(address)"
       | "release(address,address)"
       | "released(address,address)"
@@ -163,6 +167,14 @@ export interface StandardERC721AInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "publicSaleActive",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "releasable(address)",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "releasable(address,address)",
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "release(address)",
@@ -294,6 +306,14 @@ export interface StandardERC721AInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "releasable(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "releasable(address,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "release(address)",
     data: BytesLike
   ): Result;
@@ -387,6 +407,7 @@ export interface StandardERC721AInterface extends utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
+    "ConsecutiveTransfer(uint256,uint256,address,address)": EventFragment;
     "ERC20PaymentReleased(address,address,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
@@ -399,6 +420,7 @@ export interface StandardERC721AInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConsecutiveTransfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC20PaymentReleased"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
@@ -432,6 +454,20 @@ export type ApprovalForAllEvent = TypedEvent<
 >;
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
+
+export interface ConsecutiveTransferEventObject {
+  fromTokenId: BigNumber;
+  toTokenId: BigNumber;
+  from: string;
+  to: string;
+}
+export type ConsecutiveTransferEvent = TypedEvent<
+  [BigNumber, BigNumber, string, string],
+  ConsecutiveTransferEventObject
+>;
+
+export type ConsecutiveTransferEventFilter =
+  TypedEventFilter<ConsecutiveTransferEvent>;
 
 export interface ERC20PaymentReleasedEventObject {
   token: string;
@@ -601,6 +637,17 @@ export interface StandardERC721A extends BaseContract {
     payee(index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
     publicSaleActive(overrides?: CallOverrides): Promise<[boolean]>;
+
+    "releasable(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "releasable(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     "release(address)"(
       account: string,
@@ -787,6 +834,17 @@ export interface StandardERC721A extends BaseContract {
 
   publicSaleActive(overrides?: CallOverrides): Promise<boolean>;
 
+  "releasable(address)"(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "releasable(address,address)"(
+    token: string,
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   "release(address)"(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -967,6 +1025,17 @@ export interface StandardERC721A extends BaseContract {
 
     publicSaleActive(overrides?: CallOverrides): Promise<boolean>;
 
+    "releasable(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "releasable(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     "release(address)"(
       account: string,
       overrides?: CallOverrides
@@ -1108,6 +1177,19 @@ export interface StandardERC721A extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
+    "ConsecutiveTransfer(uint256,uint256,address,address)"(
+      fromTokenId?: BigNumberish | null,
+      toTokenId?: null,
+      from?: string | null,
+      to?: string | null
+    ): ConsecutiveTransferEventFilter;
+    ConsecutiveTransfer(
+      fromTokenId?: BigNumberish | null,
+      toTokenId?: null,
+      from?: string | null,
+      to?: string | null
+    ): ConsecutiveTransferEventFilter;
+
     "ERC20PaymentReleased(address,address,uint256)"(
       token?: string | null,
       to?: null,
@@ -1222,6 +1304,17 @@ export interface StandardERC721A extends BaseContract {
     payee(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     publicSaleActive(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "releasable(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "releasable(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     "release(address)"(
       account: string,
@@ -1417,6 +1510,17 @@ export interface StandardERC721A extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     publicSaleActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "releasable(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "releasable(address,address)"(
+      token: string,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     "release(address)"(
       account: string,

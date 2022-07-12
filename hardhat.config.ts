@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 
 import { HardhatUserConfig, task, types } from "hardhat/config";
 import "hardhat-deploy";
-import "@0xflicker/hardhat-etherscan";
+import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-ethers";
 import "@typechain/hardhat";
@@ -97,12 +97,12 @@ const config: HardhatUserConfig = {
   etherscan: {
     // @ts-ignore this is for the verifier
     apiKey: {
-      mainnet: process.env.ETHERSCAN_API_KEY_MAINNET,
-      goerli: process.env.ETHERSCAN_API_KEY_GOERLI,
-      polygonMumbai: process.env.ETHERSCAN_API_KEY_MATICMUM,
-      polygon: process.env.ETHERSCAN_API_KEY_MATIC,
-      rinkeby: process.env.ETHERSCAN_API_KEY_RINKEBY,
-      sepolia: process.env.ETHERSCAN_API_KEY_SEPOLIA,
+      mainnet: process.env.ETHERSCAN_API_KEY_MAINNET ?? "",
+      goerli: process.env.ETHERSCAN_API_KEY_GOERLI ?? "",
+      polygonMumbai: process.env.ETHERSCAN_API_KEY_MATICMUM ?? "",
+      polygon: process.env.ETHERSCAN_API_KEY_MATIC ?? "",
+      rinkeby: process.env.ETHERSCAN_API_KEY_RINKEBY ?? "",
+      sepolia: process.env.ETHERSCAN_API_KEY_SEPOLIA ?? "",
     },
   },
   typechain: {
